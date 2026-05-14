@@ -28,8 +28,10 @@ color:
     hex: "ffffff"          # White — primary text
   - id: col_text_dim
     hex: "9e9e9e"          # Grey — secondary / percentage text
+  - id: col_state_closed
+    hex: "555555"          # Grey — cover closed / unknown
   - id: col_bar_bg
-    hex: "0d2137"          # Dark — progress bar track
+    hex: "1e4a7a"          # Mid-blue — progress bar track (visible on both row bg colours)
   - id: col_btn_open
     hex: "1b5e20"          # Dark green — Open button
   - id: col_btn_stop
@@ -164,7 +166,7 @@ lvgl:
                         width: 12
                         height: 12
                         radius: 6
-                        bg_color: "555555"
+                        bg_color: col_state_closed
                         bg_opa: COVER
                         border_width: 0
                         align: LEFT_MID
@@ -192,7 +194,7 @@ lvgl:
                         value: 0
                     - label:
                         id: win1_pct
-                        text: "–"
+                        text: "-%"
                         text_font: font_small
                         text_color: col_text_dim
                         align: LEFT_MID
@@ -275,7 +277,7 @@ lvgl:
                         width: 12
                         height: 12
                         radius: 6
-                        bg_color: "555555"
+                        bg_color: col_state_closed
                         bg_opa: COVER
                         border_width: 0
                         align: LEFT_MID
@@ -303,7 +305,7 @@ lvgl:
                         value: 0
                     - label:
                         id: win2_pct
-                        text: "–"
+                        text: "-%"
                         text_font: font_small
                         text_color: col_text_dim
                         align: LEFT_MID
@@ -386,7 +388,7 @@ lvgl:
                         width: 12
                         height: 12
                         radius: 6
-                        bg_color: "555555"
+                        bg_color: col_state_closed
                         bg_opa: COVER
                         border_width: 0
                         align: LEFT_MID
@@ -414,7 +416,7 @@ lvgl:
                         value: 0
                     - label:
                         id: win3_pct
-                        text: "–"
+                        text: "-%"
                         text_font: font_small
                         text_color: col_text_dim
                         align: LEFT_MID
@@ -497,7 +499,7 @@ lvgl:
                         width: 12
                         height: 12
                         radius: 6
-                        bg_color: "555555"
+                        bg_color: col_state_closed
                         bg_opa: COVER
                         border_width: 0
                         align: LEFT_MID
@@ -525,7 +527,7 @@ lvgl:
                         value: 0
                     - label:
                         id: win4_pct
-                        text: "–"
+                        text: "-%"
                         text_font: font_small
                         text_color: col_text_dim
                         align: LEFT_MID
@@ -608,7 +610,7 @@ lvgl:
                         width: 12
                         height: 12
                         radius: 6
-                        bg_color: "555555"
+                        bg_color: col_state_closed
                         bg_opa: COVER
                         border_width: 0
                         align: LEFT_MID
@@ -636,7 +638,7 @@ lvgl:
                         value: 0
                     - label:
                         id: win5_pct
-                        text: "–"
+                        text: "-%"
                         text_font: font_small
                         text_color: col_text_dim
                         align: LEFT_MID
@@ -732,7 +734,7 @@ lvgl:
                         width: 12
                         height: 12
                         radius: 6
-                        bg_color: "555555"
+                        bg_color: col_state_closed
                         bg_opa: COVER
                         border_width: 0
                         align: LEFT_MID
@@ -760,7 +762,7 @@ lvgl:
                         value: 0
                     - label:
                         id: blind1_pct
-                        text: "–"
+                        text: "-%"
                         text_font: font_small
                         text_color: col_text_dim
                         align: LEFT_MID
@@ -843,7 +845,7 @@ lvgl:
                         width: 12
                         height: 12
                         radius: 6
-                        bg_color: "555555"
+                        bg_color: col_state_closed
                         bg_opa: COVER
                         border_width: 0
                         align: LEFT_MID
@@ -871,7 +873,7 @@ lvgl:
                         value: 0
                     - label:
                         id: blind2_pct
-                        text: "–"
+                        text: "-%"
                         text_font: font_small
                         text_color: col_text_dim
                         align: LEFT_MID
@@ -954,7 +956,7 @@ lvgl:
                         width: 12
                         height: 12
                         radius: 6
-                        bg_color: "555555"
+                        bg_color: col_state_closed
                         bg_opa: COVER
                         border_width: 0
                         align: LEFT_MID
@@ -982,7 +984,7 @@ lvgl:
                         value: 0
                     - label:
                         id: blind3_pct
-                        text: "–"
+                        text: "-%"
                         text_font: font_small
                         text_color: col_text_dim
                         align: LEFT_MID
@@ -1065,7 +1067,7 @@ lvgl:
                         width: 12
                         height: 12
                         radius: 6
-                        bg_color: "555555"
+                        bg_color: col_state_closed
                         bg_opa: COVER
                         border_width: 0
                         align: LEFT_MID
@@ -1093,7 +1095,7 @@ lvgl:
                         value: 0
                     - label:
                         id: blind4_pct
-                        text: "–"
+                        text: "-%"
                         text_font: font_small
                         text_color: col_text_dim
                         align: LEFT_MID
@@ -1176,7 +1178,7 @@ lvgl:
                         width: 12
                         height: 12
                         radius: 6
-                        bg_color: "555555"
+                        bg_color: col_state_closed
                         bg_opa: COVER
                         border_width: 0
                         align: LEFT_MID
@@ -1204,7 +1206,7 @@ lvgl:
                         value: 0
                     - label:
                         id: blind5_pct
-                        text: "–"
+                        text: "-%"
                         text_font: font_small
                         text_color: col_text_dim
                         align: LEFT_MID
