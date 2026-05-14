@@ -85,6 +85,13 @@ lvgl:
   touchscreens:
     - touch_panel
 
+  # Enable scroll momentum on the tabview content so a short fast swipe
+  # carries through and switches tabs without needing a full-width drag.
+  on_boot:
+    - lambda: |-
+        lv_obj_add_flag(lv_tabview_get_content(id(main_tabview)),
+                        LV_OBJ_FLAG_SCROLL_MOMENTUM);
+
   # ── Global theme defaults ─────────────────────────────────────────────────
   theme:
     obj:
