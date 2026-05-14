@@ -142,6 +142,7 @@ lvgl:
             border_width: 0
             pad_all: 0
             pad_top: 5
+            scrollbar_mode: "off"
 
             widgets:
 
@@ -200,7 +201,7 @@ lvgl:
                         width: 34
                     - button:
                         id: win1_btn_open
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
                         x: 240
@@ -219,10 +220,10 @@ lvgl:
                               align: CENTER
                     - button:
                         id: win1_btn_stop
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
-                        x: 269
+                        x: 267
                         y: 0
                         bg_color: col_btn_stop
                         on_click:
@@ -238,10 +239,10 @@ lvgl:
                               align: CENTER
                     - button:
                         id: win1_btn_close
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
-                        x: 291
+                        x: 294
                         y: 0
                         bg_color: col_btn_close
                         on_click:
@@ -311,7 +312,7 @@ lvgl:
                         width: 34
                     - button:
                         id: win2_btn_open
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
                         x: 240
@@ -330,10 +331,10 @@ lvgl:
                               align: CENTER
                     - button:
                         id: win2_btn_stop
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
-                        x: 269
+                        x: 267
                         y: 0
                         bg_color: col_btn_stop
                         on_click:
@@ -349,10 +350,10 @@ lvgl:
                               align: CENTER
                     - button:
                         id: win2_btn_close
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
-                        x: 291
+                        x: 294
                         y: 0
                         bg_color: col_btn_close
                         on_click:
@@ -422,7 +423,7 @@ lvgl:
                         width: 34
                     - button:
                         id: win3_btn_open
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
                         x: 240
@@ -441,10 +442,10 @@ lvgl:
                               align: CENTER
                     - button:
                         id: win3_btn_stop
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
-                        x: 269
+                        x: 267
                         y: 0
                         bg_color: col_btn_stop
                         on_click:
@@ -460,10 +461,10 @@ lvgl:
                               align: CENTER
                     - button:
                         id: win3_btn_close
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
-                        x: 291
+                        x: 294
                         y: 0
                         bg_color: col_btn_close
                         on_click:
@@ -533,7 +534,7 @@ lvgl:
                         width: 34
                     - button:
                         id: win4_btn_open
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
                         x: 240
@@ -552,10 +553,10 @@ lvgl:
                               align: CENTER
                     - button:
                         id: win4_btn_stop
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
-                        x: 269
+                        x: 267
                         y: 0
                         bg_color: col_btn_stop
                         on_click:
@@ -571,10 +572,10 @@ lvgl:
                               align: CENTER
                     - button:
                         id: win4_btn_close
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
-                        x: 291
+                        x: 294
                         y: 0
                         bg_color: col_btn_close
                         on_click:
@@ -644,7 +645,7 @@ lvgl:
                         width: 34
                     - button:
                         id: win5_btn_open
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
                         x: 240
@@ -663,10 +664,10 @@ lvgl:
                               align: CENTER
                     - button:
                         id: win5_btn_stop
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
-                        x: 269
+                        x: 267
                         y: 0
                         bg_color: col_btn_stop
                         on_click:
@@ -682,10 +683,10 @@ lvgl:
                               align: CENTER
                     - button:
                         id: win5_btn_close
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
-                        x: 291
+                        x: 294
                         y: 0
                         bg_color: col_btn_close
                         on_click:
@@ -709,6 +710,7 @@ lvgl:
             border_width: 0
             pad_all: 0
             pad_top: 5
+            scrollbar_mode: "off"
 
             widgets:
 
@@ -767,7 +769,7 @@ lvgl:
                         width: 34
                     - button:
                         id: blind1_btn_open
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
                         x: 240
@@ -786,10 +788,10 @@ lvgl:
                               align: CENTER
                     - button:
                         id: blind1_btn_stop
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
-                        x: 269
+                        x: 267
                         y: 0
                         bg_color: col_btn_stop
                         on_click:
@@ -805,10 +807,10 @@ lvgl:
                               align: CENTER
                     - button:
                         id: blind1_btn_close
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
-                        x: 291
+                        x: 294
                         y: 0
                         bg_color: col_btn_close
                         on_click:
@@ -878,7 +880,7 @@ lvgl:
                         width: 34
                     - button:
                         id: blind2_btn_open
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
                         x: 240
@@ -897,10 +899,10 @@ lvgl:
                               align: CENTER
                     - button:
                         id: blind2_btn_stop
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
-                        x: 269
+                        x: 267
                         y: 0
                         bg_color: col_btn_stop
                         on_click:
@@ -916,10 +918,10 @@ lvgl:
                               align: CENTER
                     - button:
                         id: blind2_btn_close
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
-                        x: 291
+                        x: 294
                         y: 0
                         bg_color: col_btn_close
                         on_click:
@@ -989,7 +991,7 @@ lvgl:
                         width: 34
                     - button:
                         id: blind3_btn_open
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
                         x: 240
@@ -1008,10 +1010,10 @@ lvgl:
                               align: CENTER
                     - button:
                         id: blind3_btn_stop
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
-                        x: 269
+                        x: 267
                         y: 0
                         bg_color: col_btn_stop
                         on_click:
@@ -1027,10 +1029,10 @@ lvgl:
                               align: CENTER
                     - button:
                         id: blind3_btn_close
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
-                        x: 291
+                        x: 294
                         y: 0
                         bg_color: col_btn_close
                         on_click:
@@ -1100,7 +1102,7 @@ lvgl:
                         width: 34
                     - button:
                         id: blind4_btn_open
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
                         x: 240
@@ -1119,10 +1121,10 @@ lvgl:
                               align: CENTER
                     - button:
                         id: blind4_btn_stop
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
-                        x: 269
+                        x: 267
                         y: 0
                         bg_color: col_btn_stop
                         on_click:
@@ -1138,10 +1140,10 @@ lvgl:
                               align: CENTER
                     - button:
                         id: blind4_btn_close
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
-                        x: 291
+                        x: 294
                         y: 0
                         bg_color: col_btn_close
                         on_click:
@@ -1211,7 +1213,7 @@ lvgl:
                         width: 34
                     - button:
                         id: blind5_btn_open
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
                         x: 240
@@ -1230,10 +1232,10 @@ lvgl:
                               align: CENTER
                     - button:
                         id: blind5_btn_stop
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
-                        x: 269
+                        x: 267
                         y: 0
                         bg_color: col_btn_stop
                         on_click:
@@ -1249,10 +1251,10 @@ lvgl:
                               align: CENTER
                     - button:
                         id: blind5_btn_close
-                        width: 26
+                        width: 24
                         height: 28
                         align: LEFT_MID
-                        x: 291
+                        x: 294
                         y: 0
                         bg_color: col_btn_close
                         on_click:
@@ -1278,6 +1280,7 @@ lvgl:
             bg_color: col_bg
             border_width: 0
             pad_all: 0
+            scrollbar_mode: "off"
 
             widgets:
               # Row 1
