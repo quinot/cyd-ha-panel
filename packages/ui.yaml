@@ -1290,9 +1290,9 @@ lvgl:
 
           # ================================================================
           # TAB 3 — SCENES
-          # 2 × 3 grid of 100×65 buttons with teal border accent
-          # Column x positions: 5, 112, 219  (3 × 100px + 9px gaps + 5px margin)
-          # Row y positions:    20, 105       (2 × 65px + 30px top pad + 20px gap)
+          # 2 × 2 grid of 148×85px buttons
+          # Columns: x=8, x=164  (148px wide, 8px gap, 8px margins)
+          # Rows:    y=15, y=110  (85px tall, 10px gap, 15px margins)
           # ================================================================
           - name: "Scenes"
             id: tab_scenes
@@ -1302,13 +1302,12 @@ lvgl:
             scrollbar_mode: "off"
 
             widgets:
-              # Row 1
               - button:
                   id: scene1_btn
-                  width: 98
-                  height: 80
-                  x: 5
-                  y: 25
+                  width: 148
+                  height: 85
+                  x: 8
+                  y: 15
                   align: TOP_LEFT
                   bg_color: col_scene_btn
                   radius: 8
@@ -1330,10 +1329,10 @@ lvgl:
 
               - button:
                   id: scene2_btn
-                  width: 98
-                  height: 80
-                  x: 111
-                  y: 25
+                  width: 148
+                  height: 85
+                  x: 164
+                  y: 15
                   align: TOP_LEFT
                   bg_color: col_scene_btn
                   radius: 8
@@ -1355,10 +1354,10 @@ lvgl:
 
               - button:
                   id: scene3_btn
-                  width: 98
-                  height: 80
-                  x: 217
-                  y: 25
+                  width: 148
+                  height: 85
+                  x: 8
+                  y: 110
                   align: TOP_LEFT
                   bg_color: col_scene_btn
                   radius: 8
@@ -1378,13 +1377,12 @@ lvgl:
                         align: CENTER
                         long_mode: WRAP
 
-              # Row 2
               - button:
                   id: scene4_btn
-                  width: 98
-                  height: 80
-                  x: 5
-                  y: 115
+                  width: 148
+                  height: 85
+                  x: 164
+                  y: 110
                   align: TOP_LEFT
                   bg_color: col_scene_btn
                   radius: 8
@@ -1399,56 +1397,6 @@ lvgl:
                   widgets:
                     - label:
                         text: ${scene4_name}
-                        text_font: font_scene
-                        text_color: col_text
-                        align: CENTER
-                        long_mode: WRAP
-
-              - button:
-                  id: scene5_btn
-                  width: 98
-                  height: 80
-                  x: 111
-                  y: 115
-                  align: TOP_LEFT
-                  bg_color: col_scene_btn
-                  radius: 8
-                  border_color: col_accent
-                  border_width: 1
-                  shadow_width: 0
-                  on_click:
-                    - homeassistant.action:
-                        action: scene.turn_on
-                        data:
-                          entity_id: ${scene5_id}
-                  widgets:
-                    - label:
-                        text: ${scene5_name}
-                        text_font: font_scene
-                        text_color: col_text
-                        align: CENTER
-                        long_mode: WRAP
-
-              - button:
-                  id: scene6_btn
-                  width: 98
-                  height: 80
-                  x: 217
-                  y: 115
-                  align: TOP_LEFT
-                  bg_color: col_scene_btn
-                  radius: 8
-                  border_color: col_accent
-                  border_width: 1
-                  shadow_width: 0
-                  on_click:
-                    - homeassistant.action:
-                        action: scene.turn_on
-                        data:
-                          entity_id: ${scene6_id}
-                  widgets:
-                    - label:
-                        text: ${scene6_name}
                         text_font: font_scene
                         text_color: col_text
                         align: CENTER

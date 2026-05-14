@@ -57,18 +57,14 @@ substitutions:
 
   # ── Scenes (6 × scene entity, 2 rows × 3 columns) ─────────────────────────
   # Labels wrap inside 98×80px buttons; keep them short (≤ 12 chars).
-  scene1_id:   scene.matin
-  scene1_name: "Matin"
-  scene2_id:   scene.soiree
-  scene2_name: "Soirée"
-  scene3_id:   scene.nuit
-  scene3_name: "Nuit"
-  scene4_id:   scene.absent
-  scene4_name: "Absent"
-  scene5_id:   scene.home_cinema
-  scene5_name: "Home cinéma"
-  scene6_id:   scene.aeration
-  scene6_name: "Aération"
+  scene1_id:   scene.aziz_light
+  scene1_name: "Aziz, light!"
+  scene2_id:   scene.home_cinema
+  scene2_name: "Home cinema"
+  scene3_id:   scene.aeration
+  scene3_name: "Aération"
+  scene4_id:   scene.fermier_les_fenetres
+  scene4_name: "Fermer les fenêtres"
 
 # =============================================================================
 # Core ESPHome config
