@@ -1,0 +1,61 @@
+# =============================================================================
+# Mock data package — UI smoke-testing without a Home Assistant connection
+#
+# USAGE
+# -----
+# In cyd-ha-panel.yaml, under `packages:`, add:
+#   mock: !include packages/mock_data.yaml
+#
+# Remove (or comment out) that line when deploying for real.
+#
+# What it does
+# ------------
+# Fires on boot (after LVGL is initialised) and pushes plausible test values
+# into every bar, percentage label, and state dot so the full UI is visible.
+# =============================================================================
+
+esphome:
+  on_boot:
+    priority: -200   # Run after LVGL (-100) and all components are ready
+    then:
+      # ── Windows ─────────────────────────────────────────────────────────────
+      - lvgl.bar.update:   { id: win1_bar, value: 100 }
+      - lvgl.label.update: { id: win1_pct, text: "100%" }
+      - lambda: lv_obj_set_style_bg_color(id(win1_dot), lv_color_hex(0x4caf50), LV_PART_MAIN);  # open
+
+      - lvgl.bar.update:   { id: win2_bar, value: 65 }
+      - lvgl.label.update: { id: win2_pct, text: "65%" }
+      - lambda: lv_obj_set_style_bg_color(id(win2_dot), lv_color_hex(0x00b4d8), LV_PART_MAIN);  # opening
+
+      - lvgl.bar.update:   { id: win3_bar, value: 30 }
+      - lvgl.label.update: { id: win3_pct, text: "30%" }
+      - lambda: lv_obj_set_style_bg_color(id(win3_dot), lv_color_hex(0xff9800), LV_PART_MAIN);  # closing
+
+      - lvgl.bar.update:   { id: win4_bar, value: 0 }
+      - lvgl.label.update: { id: win4_pct, text: "0%" }
+      - lambda: lv_obj_set_style_bg_color(id(win4_dot), lv_color_hex(0x555555), LV_PART_MAIN);  # closed
+
+      - lvgl.bar.update:   { id: win5_bar, value: 50 }
+      - lvgl.label.update: { id: win5_pct, text: "50%" }
+      - lambda: lv_obj_set_style_bg_color(id(win5_dot), lv_color_hex(0xffeb3b), LV_PART_MAIN);  # stopped
+
+      # ── Blinds ──────────────────────────────────────────────────────────────
+      - lvgl.bar.update:   { id: blind1_bar, value: 80 }
+      - lvgl.label.update: { id: blind1_pct, text: "80%" }
+      - lambda: lv_obj_set_style_bg_color(id(blind1_dot), lv_color_hex(0x4caf50), LV_PART_MAIN);  # open
+
+      - lvgl.bar.update:   { id: blind2_bar, value: 0 }
+      - lvgl.label.update: { id: blind2_pct, text: "0%" }
+      - lambda: lv_obj_set_style_bg_color(id(blind2_dot), lv_color_hex(0x555555), LV_PART_MAIN);  # closed
+
+      - lvgl.bar.update:   { id: blind3_bar, value: 45 }
+      - lvgl.label.update: { id: blind3_pct, text: "45%" }
+      - lambda: lv_obj_set_style_bg_color(id(blind3_dot), lv_color_hex(0xffeb3b), LV_PART_MAIN);  # stopped
+
+      - lvgl.bar.update:   { id: blind4_bar, value: 20 }
+      - lvgl.label.update: { id: blind4_pct, text: "20%" }
+      - lambda: lv_obj_set_style_bg_color(id(blind4_dot), lv_color_hex(0xff9800), LV_PART_MAIN);  # closing
+
+      - lvgl.bar.update:   { id: blind5_bar, value: 100 }
+      - lvgl.label.update: { id: blind5_pct, text: "100%" }
+      - lambda: lv_obj_set_style_bg_color(id(blind5_dot), lv_color_hex(0x00b4d8), LV_PART_MAIN);  # opening

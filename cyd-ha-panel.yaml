@@ -1,0 +1,136 @@
+# =============================================================================
+# CYD HA Panel — top-level configuration
+#
+# Hardware : ESP32-2432S032C  (Cheap Yellow Display v2, capacitive touch)
+# ESPHome  : ≥ 2024.2  (required for LVGL component and homeassistant.action)
+#
+# QUICK START
+# -----------
+# 1. Copy secrets.yaml.example → secrets.yaml and fill in your values
+# 2. Edit the substitutions below to match your HA entity IDs and labels
+# 3. In HA: Settings → Devices & Services → ESPHome → Configure →
+#    enable "Allow device to perform Home Assistant actions"
+# 4. esphome run cyd-ha-panel.yaml
+#
+# CUSTOMISATION
+# -------------
+# All entity IDs and display names live here as substitutions.
+# Nothing in packages/ needs to change for routine reconfiguration.
+#
+# To add a 6th cover:
+#   - Add win6_id / win6_name substitutions
+#   - Add a sensor + text_sensor block in packages/entities.yaml
+#   - Add a win6_row object in packages/ui.yaml (reduce row height to 33px
+#     and use y: 210 so all 6 rows + 5px top pad = 203px, fitting in 210px)
+# =============================================================================
+
+substitutions:
+  # ── Device identity ────────────────────────────────────────────────────────
+  device_name: cyd-ha-panel
+  friendly_name: "CYD HA Panel"
+
+  # ── Roof windows (5 × cover entity) ───────────────────────────────────────
+  # Replace entity IDs with your actual cover entities from HA.
+  # Names are truncated to ~10 chars on screen (font_small, 78px wide).
+  win1_id:   cover.velux_salon
+  win1_name: "Salon"
+  win2_id:   cover.velux_chambre_1
+  win2_name: "Ch. 1"
+  win3_id:   cover.velux_chambre_2
+  win3_name: "Ch. 2"
+  win4_id:   cover.velux_bureau
+  win4_name: "Bureau"
+  win5_id:   cover.velux_salle_de_bain
+  win5_name: "SdB"
+
+  # ── Blinds (5 × cover entity) ─────────────────────────────────────────────
+  blind1_id:   cover.store_salon
+  blind1_name: "Salon"
+  blind2_id:   cover.store_chambre_1
+  blind2_name: "Ch. 1"
+  blind3_id:   cover.store_chambre_2
+  blind3_name: "Ch. 2"
+  blind4_id:   cover.store_bureau
+  blind4_name: "Bureau"
+  blind5_id:   cover.store_salle_de_bain
+  blind5_name: "SdB"
+
+  # ── Scenes (6 × scene entity, 2 rows × 3 columns) ─────────────────────────
+  # Labels wrap inside 98×80px buttons; keep them short (≤ 12 chars).
+  scene1_id:   scene.matin
+  scene1_name: "Matin"
+  scene2_id:   scene.soiree
+  scene2_name: "Soirée"
+  scene3_id:   scene.nuit
+  scene3_name: "Nuit"
+  scene4_id:   scene.absent
+  scene4_name: "Absent"
+  scene5_id:   scene.film
+  scene5_name: "Film"
+  scene6_id:   scene.tout_ouvrir
+  scene6_name: "Tout ouvrir"
+
+# =============================================================================
+# Core ESPHome config
+# =============================================================================
+esphome:
+  name: ${device_name}
+  friendly_name: ${friendly_name}
+  platformio_options:
+    # DIO flash mode is required on ESP32-2432S032 — QIO causes boot loops
+    board_build.flash_mode: dio
+
+esp32:
+  board: esp32dev
+  framework:
+    type: arduino
+
+# ---------------------------------------------------------------------------
+# Logging (reduce to WARN in production to free up UART bandwidth)
+# ---------------------------------------------------------------------------
+logger:
+  level: DEBUG
+  baud_rate: 115200
+
+# ---------------------------------------------------------------------------
+# Home Assistant API  (no password = unencrypted, fine on a local network)
+# ---------------------------------------------------------------------------
+api:
+  # Set to 0s to disable automatic reboot when HA is unreachable (useful for
+  # standalone UI testing). Remove or restore the default (15min) in production.
+  reboot_timeout: 0s
+
+# ---------------------------------------------------------------------------
+# OTA firmware updates  (no password = unprotected; add one once on the network)
+# ---------------------------------------------------------------------------
+ota:
+  - platform: esphome
+
+# ---------------------------------------------------------------------------
+# WiFi
+# Leave ssid/password blank on first flash — the captive portal AP will appear
+# and let you configure WiFi from any phone or browser without touching YAML.
+#
+# Once you want to lock in credentials, either:
+#   a) fill them in here directly, or
+#   b) create secrets.yaml and use !secret wifi_ssid / !secret wifi_password
+# ---------------------------------------------------------------------------
+wifi:
+  # ssid: "YourNetwork"       # ← fill in, or leave blank for captive-portal-first boot
+  # password: "YourPassword"
+  ap:
+    ssid: "${friendly_name} AP"
+    password: "cyd-setup"     # AP password shown on screen / label the device
+
+captive_portal:
+
+# ---------------------------------------------------------------------------
+# Packages — hardware, HA entity imports, LVGL UI
+# ---------------------------------------------------------------------------
+packages:
+  hardware: !include packages/hardware.yaml
+  entities: !include packages/entities.yaml
+  ui:       !include packages/ui.yaml
+  # Uncomment the line below to test the UI without Home Assistant.
+  # Remove it (or comment out) before deploying for real.
+  # mock: !include packages/mock_data.yaml

@@ -1,0 +1,114 @@
+# =============================================================================
+# Hardware package — ESP32-2432S032C (Cheap Yellow Display v2, capacitive)
+#
+# Display : ST7789 320×240 IPS TFT via SPI
+#   MOSI=GPIO13  CLK=GPIO14  CS=GPIO15  DC=GPIO2  RST=none
+#   Backlight PWM on GPIO27
+#
+# Touch   : GT911 capacitive I2C
+#   SDA=GPIO33  SCL=GPIO32  INT=GPIO36  addr=0x5D
+#   NOTE: some boards use SDA=21/SCL=22 — swap if touch is unresponsive
+#
+# RGB LED : active-low (inverted) on GPIO4/16/17
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# SPI bus — display only (write-only, MISO omitted)
+# ---------------------------------------------------------------------------
+spi:
+  - id: display_spi
+    clk_pin: GPIO14
+    mosi_pin: GPIO13
+
+# ---------------------------------------------------------------------------
+# I2C bus — GT911 touch controller
+# ---------------------------------------------------------------------------
+i2c:
+  - id: touch_i2c
+    sda: GPIO33
+    scl: GPIO32
+    frequency: 400kHz
+    scan: false   # Silence address-scan log spam
+
+# ---------------------------------------------------------------------------
+# PWM outputs
+# ---------------------------------------------------------------------------
+output:
+  # Backlight (active-high, 0 % = off, 100 % = full brightness)
+  - platform: ledc
+    id: backlight_output
+    pin: GPIO27
+    frequency: 1000Hz
+
+  # RGB status LED (active-low: inverted so 100 % = full on)
+  - platform: ledc
+    id: led_r
+    pin: GPIO4
+    inverted: true
+  - platform: ledc
+    id: led_g
+    pin: GPIO16
+    inverted: true
+  - platform: ledc
+    id: led_b
+    pin: GPIO17
+    inverted: true
+
+# ---------------------------------------------------------------------------
+# Lights
+# ---------------------------------------------------------------------------
+light:
+  # Display backlight — exposed to HA so automations can dim it
+  - platform: monochromatic
+    id: backlight
+    name: "CYD Backlight"
+    output: backlight_output
+    default_transition_length: 300ms
+    restore_mode: ALWAYS_ON
+
+  # Onboard RGB LED — useful for status feedback / notifications
+  - platform: rgb
+    id: status_led
+    name: "CYD Status LED"
+    red: led_r
+    green: led_g
+    blue: led_b
+    restore_mode: ALWAYS_OFF
+
+# ---------------------------------------------------------------------------
+# GT911 capacitive touchscreen
+# ---------------------------------------------------------------------------
+touchscreen:
+  - platform: gt911
+    id: touch_panel
+    i2c_id: touch_i2c
+    address: 0x5D
+    # No interrupt pin — driver polls for touch events
+    reset_pin: GPIO25
+    transform:
+      mirror_x: true
+      mirror_y: false
+      swap_xy: true
+
+# ---------------------------------------------------------------------------
+# ST7789 display via ili9xxx driver
+# ---------------------------------------------------------------------------
+display:
+  - platform: ili9xxx
+    id: main_display
+    model: ST7789V
+    spi_id: display_spi
+    cs_pin: GPIO15
+    dc_pin: GPIO2
+    # No physical reset pin on this board variant — omit reset_pin entirely
+    invert_colors: true   # Required for ST7789V IPS panel
+    dimensions:
+      width: 320
+      height: 240
+    transform:
+      mirror_x: false
+      mirror_y: true
+      swap_xy: true
+    # LVGL owns all rendering — no lambda block allowed when using LVGL
+    auto_clear_enabled: false
+    update_interval: never

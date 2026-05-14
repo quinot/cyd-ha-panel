@@ -1,0 +1,1433 @@
+# =============================================================================
+# UI package — LVGL interface, 320×240 landscape, dark navy theme
+#
+# Layout:
+#   Tab bar (30px, bottom): [Windows] [Blinds] [Scenes]
+#   Content area (210px):
+#     Windows / Blinds tabs: 5 rows × 40px
+#       [●dot][name][████░ bar][pct%][▲][■][▼]
+#     Scenes tab: 2 × 3 grid of 100×65px scene buttons
+#
+# Colour tokens   — defined in `color:` section below
+# Font tokens     — Roboto (11/14px) + Material Symbols (icons)
+# Button colours  — open=dark-green, stop=deep-orange, close=dark-red
+# Dot colours     — reflect live HA state via entities.yaml lambdas
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# Colour palette
+# ---------------------------------------------------------------------------
+color:
+  - id: col_bg
+    hex: "1a1a2e"          # Dark navy — screen background
+  - id: col_card
+    hex: "16213e"          # Slightly lighter — alternating row tint
+  - id: col_accent
+    hex: "00b4d8"          # Teal — progress bar fill, borders
+  - id: col_text
+    hex: "ffffff"          # White — primary text
+  - id: col_text_dim
+    hex: "9e9e9e"          # Grey — secondary / percentage text
+  - id: col_bar_bg
+    hex: "0d2137"          # Dark — progress bar track
+  - id: col_btn_open
+    hex: "1b5e20"          # Dark green — Open button
+  - id: col_btn_stop
+    hex: "e65100"          # Deep orange — Stop button
+  - id: col_btn_close
+    hex: "7f0000"          # Dark red — Close button
+  - id: col_scene_btn
+    hex: "0d3b5e"          # Deep blue — scene card background
+  - id: col_tab_active
+    hex: "00b4d8"          # Teal — active tab indicator
+  - id: col_tab_bar
+    hex: "0a0a1a"          # Near-black — tab bar background
+
+# ---------------------------------------------------------------------------
+# Fonts
+# ---------------------------------------------------------------------------
+font:
+  # Labels — row names, percentages, tab labels
+  - file: "gfonts://Roboto"
+    id: font_small
+    size: 11
+    bpp: 4
+
+  - file: "gfonts://Roboto"
+    id: font_medium
+    size: 14
+    bpp: 4
+
+  # Scene button text
+  - file: "gfonts://Roboto@700"
+    id: font_scene
+    size: 13
+    bpp: 4
+
+  # Control button icons — only the 3 glyphs we need (saves flash)
+  - file: "gfonts://Material+Symbols+Outlined"
+    id: font_icons
+    size: 16
+    bpp: 4
+    glyphs:
+      - "\U0000e5d8"   # expand_less  — Open  (▲)
+      - "\U0000e047"   # stop         — Stop  (■)
+      - "\U0000e5cf"   # expand_more  — Close (▼)
+
+# ---------------------------------------------------------------------------
+# LVGL configuration
+# ---------------------------------------------------------------------------
+lvgl:
+  displays:
+    - main_display
+  touchscreens:
+    - touch_panel
+
+  # ── Global theme defaults ─────────────────────────────────────────────────
+  theme:
+    obj:
+      bg_color: col_bg
+      bg_opa: COVER
+      border_width: 0
+      pad_all: 0
+    label:
+      text_color: col_text
+      text_font: font_medium
+    button:
+      bg_color: col_card
+      bg_opa: COVER
+      border_width: 0
+      radius: 4
+      text_color: col_text
+      shadow_width: 0
+    bar:
+      bg_color: col_bar_bg
+      bg_opa: COVER
+      indicator:
+        bg_color: col_accent
+        bg_opa: COVER
+
+  # ── Root widget — full-screen tabview ─────────────────────────────────────
+  widgets:
+    - tabview:
+        id: main_tabview
+        width: 320
+        height: 240
+        x: 0
+        y: 0
+        align: TOP_LEFT
+        bg_color: col_bg
+        border_width: 0
+        pad_all: 0
+        position: BOTTOM
+        size: 30
+
+        tabs:
+
+          # ================================================================
+          # TAB 1 — WINDOWS
+          # 5 rows stacked vertically; alternating col_card / col_bg rows
+          # Row layout (320px wide, 40px tall):
+          #   x=4   dot (12×12 circle)
+          #   x=20  name label (width 78)
+          #   x=100 position bar (100×10)
+          #   x=204 percentage label (width 34)
+          #   x=240 Open button  (26×28)
+          #   x=269 Stop button  (26×28)
+          #   x=291 Close button (26×28)
+          # ================================================================
+          - name: "Windows"
+            id: tab_windows
+            bg_color: col_bg
+            border_width: 0
+            pad_all: 0
+            pad_top: 5
+
+            widgets:
+
+              # ── Row 1 ────────────────────────────────────────────────────
+              - obj:
+                  id: win1_row
+                  width: 320
+                  height: 40
+                  x: 0
+                  y: 0
+                  align: TOP_LEFT
+                  bg_color: col_card
+                  radius: 0
+                  border_width: 0
+                  pad_all: 0
+                  widgets:
+                    - obj:
+                        id: win1_dot
+                        width: 12
+                        height: 12
+                        radius: 6
+                        bg_color: "555555"
+                        bg_opa: COVER
+                        border_width: 0
+                        align: LEFT_MID
+                        x: 4
+                        y: 0
+                    - label:
+                        id: win1_label
+                        text: ${win1_name}
+                        text_font: font_small
+                        text_color: col_text
+                        align: LEFT_MID
+                        x: 20
+                        y: 0
+                        width: 78
+                        long_mode: CLIP
+                    - bar:
+                        id: win1_bar
+                        width: 100
+                        height: 10
+                        align: LEFT_MID
+                        x: 100
+                        y: 0
+                        min_value: 0
+                        max_value: 100
+                        value: 0
+                    - label:
+                        id: win1_pct
+                        text: "–"
+                        text_font: font_small
+                        text_color: col_text_dim
+                        align: LEFT_MID
+                        x: 204
+                        y: 0
+                        width: 34
+                    - button:
+                        id: win1_btn_open
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 240
+                        y: 0
+                        bg_color: col_btn_open
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.open_cover
+                              data:
+                                entity_id: ${win1_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e5d8"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+                    - button:
+                        id: win1_btn_stop
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 269
+                        y: 0
+                        bg_color: col_btn_stop
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.stop_cover
+                              data:
+                                entity_id: ${win1_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e047"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+                    - button:
+                        id: win1_btn_close
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 291
+                        y: 0
+                        bg_color: col_btn_close
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.close_cover
+                              data:
+                                entity_id: ${win1_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e5cf"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+
+              # ── Row 2 ────────────────────────────────────────────────────
+              - obj:
+                  id: win2_row
+                  width: 320
+                  height: 40
+                  x: 0
+                  y: 42
+                  align: TOP_LEFT
+                  bg_color: col_bg
+                  radius: 0
+                  border_width: 0
+                  pad_all: 0
+                  widgets:
+                    - obj:
+                        id: win2_dot
+                        width: 12
+                        height: 12
+                        radius: 6
+                        bg_color: "555555"
+                        bg_opa: COVER
+                        border_width: 0
+                        align: LEFT_MID
+                        x: 4
+                        y: 0
+                    - label:
+                        id: win2_label
+                        text: ${win2_name}
+                        text_font: font_small
+                        text_color: col_text
+                        align: LEFT_MID
+                        x: 20
+                        y: 0
+                        width: 78
+                        long_mode: CLIP
+                    - bar:
+                        id: win2_bar
+                        width: 100
+                        height: 10
+                        align: LEFT_MID
+                        x: 100
+                        y: 0
+                        min_value: 0
+                        max_value: 100
+                        value: 0
+                    - label:
+                        id: win2_pct
+                        text: "–"
+                        text_font: font_small
+                        text_color: col_text_dim
+                        align: LEFT_MID
+                        x: 204
+                        y: 0
+                        width: 34
+                    - button:
+                        id: win2_btn_open
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 240
+                        y: 0
+                        bg_color: col_btn_open
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.open_cover
+                              data:
+                                entity_id: ${win2_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e5d8"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+                    - button:
+                        id: win2_btn_stop
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 269
+                        y: 0
+                        bg_color: col_btn_stop
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.stop_cover
+                              data:
+                                entity_id: ${win2_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e047"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+                    - button:
+                        id: win2_btn_close
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 291
+                        y: 0
+                        bg_color: col_btn_close
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.close_cover
+                              data:
+                                entity_id: ${win2_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e5cf"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+
+              # ── Row 3 ────────────────────────────────────────────────────
+              - obj:
+                  id: win3_row
+                  width: 320
+                  height: 40
+                  x: 0
+                  y: 84
+                  align: TOP_LEFT
+                  bg_color: col_card
+                  radius: 0
+                  border_width: 0
+                  pad_all: 0
+                  widgets:
+                    - obj:
+                        id: win3_dot
+                        width: 12
+                        height: 12
+                        radius: 6
+                        bg_color: "555555"
+                        bg_opa: COVER
+                        border_width: 0
+                        align: LEFT_MID
+                        x: 4
+                        y: 0
+                    - label:
+                        id: win3_label
+                        text: ${win3_name}
+                        text_font: font_small
+                        text_color: col_text
+                        align: LEFT_MID
+                        x: 20
+                        y: 0
+                        width: 78
+                        long_mode: CLIP
+                    - bar:
+                        id: win3_bar
+                        width: 100
+                        height: 10
+                        align: LEFT_MID
+                        x: 100
+                        y: 0
+                        min_value: 0
+                        max_value: 100
+                        value: 0
+                    - label:
+                        id: win3_pct
+                        text: "–"
+                        text_font: font_small
+                        text_color: col_text_dim
+                        align: LEFT_MID
+                        x: 204
+                        y: 0
+                        width: 34
+                    - button:
+                        id: win3_btn_open
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 240
+                        y: 0
+                        bg_color: col_btn_open
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.open_cover
+                              data:
+                                entity_id: ${win3_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e5d8"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+                    - button:
+                        id: win3_btn_stop
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 269
+                        y: 0
+                        bg_color: col_btn_stop
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.stop_cover
+                              data:
+                                entity_id: ${win3_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e047"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+                    - button:
+                        id: win3_btn_close
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 291
+                        y: 0
+                        bg_color: col_btn_close
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.close_cover
+                              data:
+                                entity_id: ${win3_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e5cf"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+
+              # ── Row 4 ────────────────────────────────────────────────────
+              - obj:
+                  id: win4_row
+                  width: 320
+                  height: 40
+                  x: 0
+                  y: 126
+                  align: TOP_LEFT
+                  bg_color: col_bg
+                  radius: 0
+                  border_width: 0
+                  pad_all: 0
+                  widgets:
+                    - obj:
+                        id: win4_dot
+                        width: 12
+                        height: 12
+                        radius: 6
+                        bg_color: "555555"
+                        bg_opa: COVER
+                        border_width: 0
+                        align: LEFT_MID
+                        x: 4
+                        y: 0
+                    - label:
+                        id: win4_label
+                        text: ${win4_name}
+                        text_font: font_small
+                        text_color: col_text
+                        align: LEFT_MID
+                        x: 20
+                        y: 0
+                        width: 78
+                        long_mode: CLIP
+                    - bar:
+                        id: win4_bar
+                        width: 100
+                        height: 10
+                        align: LEFT_MID
+                        x: 100
+                        y: 0
+                        min_value: 0
+                        max_value: 100
+                        value: 0
+                    - label:
+                        id: win4_pct
+                        text: "–"
+                        text_font: font_small
+                        text_color: col_text_dim
+                        align: LEFT_MID
+                        x: 204
+                        y: 0
+                        width: 34
+                    - button:
+                        id: win4_btn_open
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 240
+                        y: 0
+                        bg_color: col_btn_open
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.open_cover
+                              data:
+                                entity_id: ${win4_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e5d8"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+                    - button:
+                        id: win4_btn_stop
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 269
+                        y: 0
+                        bg_color: col_btn_stop
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.stop_cover
+                              data:
+                                entity_id: ${win4_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e047"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+                    - button:
+                        id: win4_btn_close
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 291
+                        y: 0
+                        bg_color: col_btn_close
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.close_cover
+                              data:
+                                entity_id: ${win4_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e5cf"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+
+              # ── Row 5 ────────────────────────────────────────────────────
+              - obj:
+                  id: win5_row
+                  width: 320
+                  height: 40
+                  x: 0
+                  y: 168
+                  align: TOP_LEFT
+                  bg_color: col_card
+                  radius: 0
+                  border_width: 0
+                  pad_all: 0
+                  widgets:
+                    - obj:
+                        id: win5_dot
+                        width: 12
+                        height: 12
+                        radius: 6
+                        bg_color: "555555"
+                        bg_opa: COVER
+                        border_width: 0
+                        align: LEFT_MID
+                        x: 4
+                        y: 0
+                    - label:
+                        id: win5_label
+                        text: ${win5_name}
+                        text_font: font_small
+                        text_color: col_text
+                        align: LEFT_MID
+                        x: 20
+                        y: 0
+                        width: 78
+                        long_mode: CLIP
+                    - bar:
+                        id: win5_bar
+                        width: 100
+                        height: 10
+                        align: LEFT_MID
+                        x: 100
+                        y: 0
+                        min_value: 0
+                        max_value: 100
+                        value: 0
+                    - label:
+                        id: win5_pct
+                        text: "–"
+                        text_font: font_small
+                        text_color: col_text_dim
+                        align: LEFT_MID
+                        x: 204
+                        y: 0
+                        width: 34
+                    - button:
+                        id: win5_btn_open
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 240
+                        y: 0
+                        bg_color: col_btn_open
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.open_cover
+                              data:
+                                entity_id: ${win5_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e5d8"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+                    - button:
+                        id: win5_btn_stop
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 269
+                        y: 0
+                        bg_color: col_btn_stop
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.stop_cover
+                              data:
+                                entity_id: ${win5_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e047"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+                    - button:
+                        id: win5_btn_close
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 291
+                        y: 0
+                        bg_color: col_btn_close
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.close_cover
+                              data:
+                                entity_id: ${win5_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e5cf"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+
+          # ================================================================
+          # TAB 2 — BLINDS  (identical row structure to Windows)
+          # ================================================================
+          - name: "Blinds"
+            id: tab_blinds
+            bg_color: col_bg
+            border_width: 0
+            pad_all: 0
+            pad_top: 5
+
+            widgets:
+
+              # ── Row 1 ────────────────────────────────────────────────────
+              - obj:
+                  id: blind1_row
+                  width: 320
+                  height: 40
+                  x: 0
+                  y: 0
+                  align: TOP_LEFT
+                  bg_color: col_card
+                  radius: 0
+                  border_width: 0
+                  pad_all: 0
+                  widgets:
+                    - obj:
+                        id: blind1_dot
+                        width: 12
+                        height: 12
+                        radius: 6
+                        bg_color: "555555"
+                        bg_opa: COVER
+                        border_width: 0
+                        align: LEFT_MID
+                        x: 4
+                        y: 0
+                    - label:
+                        id: blind1_label
+                        text: ${blind1_name}
+                        text_font: font_small
+                        text_color: col_text
+                        align: LEFT_MID
+                        x: 20
+                        y: 0
+                        width: 78
+                        long_mode: CLIP
+                    - bar:
+                        id: blind1_bar
+                        width: 100
+                        height: 10
+                        align: LEFT_MID
+                        x: 100
+                        y: 0
+                        min_value: 0
+                        max_value: 100
+                        value: 0
+                    - label:
+                        id: blind1_pct
+                        text: "–"
+                        text_font: font_small
+                        text_color: col_text_dim
+                        align: LEFT_MID
+                        x: 204
+                        y: 0
+                        width: 34
+                    - button:
+                        id: blind1_btn_open
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 240
+                        y: 0
+                        bg_color: col_btn_open
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.open_cover
+                              data:
+                                entity_id: ${blind1_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e5d8"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+                    - button:
+                        id: blind1_btn_stop
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 269
+                        y: 0
+                        bg_color: col_btn_stop
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.stop_cover
+                              data:
+                                entity_id: ${blind1_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e047"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+                    - button:
+                        id: blind1_btn_close
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 291
+                        y: 0
+                        bg_color: col_btn_close
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.close_cover
+                              data:
+                                entity_id: ${blind1_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e5cf"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+
+              # ── Row 2 ────────────────────────────────────────────────────
+              - obj:
+                  id: blind2_row
+                  width: 320
+                  height: 40
+                  x: 0
+                  y: 42
+                  align: TOP_LEFT
+                  bg_color: col_bg
+                  radius: 0
+                  border_width: 0
+                  pad_all: 0
+                  widgets:
+                    - obj:
+                        id: blind2_dot
+                        width: 12
+                        height: 12
+                        radius: 6
+                        bg_color: "555555"
+                        bg_opa: COVER
+                        border_width: 0
+                        align: LEFT_MID
+                        x: 4
+                        y: 0
+                    - label:
+                        id: blind2_label
+                        text: ${blind2_name}
+                        text_font: font_small
+                        text_color: col_text
+                        align: LEFT_MID
+                        x: 20
+                        y: 0
+                        width: 78
+                        long_mode: CLIP
+                    - bar:
+                        id: blind2_bar
+                        width: 100
+                        height: 10
+                        align: LEFT_MID
+                        x: 100
+                        y: 0
+                        min_value: 0
+                        max_value: 100
+                        value: 0
+                    - label:
+                        id: blind2_pct
+                        text: "–"
+                        text_font: font_small
+                        text_color: col_text_dim
+                        align: LEFT_MID
+                        x: 204
+                        y: 0
+                        width: 34
+                    - button:
+                        id: blind2_btn_open
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 240
+                        y: 0
+                        bg_color: col_btn_open
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.open_cover
+                              data:
+                                entity_id: ${blind2_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e5d8"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+                    - button:
+                        id: blind2_btn_stop
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 269
+                        y: 0
+                        bg_color: col_btn_stop
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.stop_cover
+                              data:
+                                entity_id: ${blind2_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e047"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+                    - button:
+                        id: blind2_btn_close
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 291
+                        y: 0
+                        bg_color: col_btn_close
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.close_cover
+                              data:
+                                entity_id: ${blind2_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e5cf"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+
+              # ── Row 3 ────────────────────────────────────────────────────
+              - obj:
+                  id: blind3_row
+                  width: 320
+                  height: 40
+                  x: 0
+                  y: 84
+                  align: TOP_LEFT
+                  bg_color: col_card
+                  radius: 0
+                  border_width: 0
+                  pad_all: 0
+                  widgets:
+                    - obj:
+                        id: blind3_dot
+                        width: 12
+                        height: 12
+                        radius: 6
+                        bg_color: "555555"
+                        bg_opa: COVER
+                        border_width: 0
+                        align: LEFT_MID
+                        x: 4
+                        y: 0
+                    - label:
+                        id: blind3_label
+                        text: ${blind3_name}
+                        text_font: font_small
+                        text_color: col_text
+                        align: LEFT_MID
+                        x: 20
+                        y: 0
+                        width: 78
+                        long_mode: CLIP
+                    - bar:
+                        id: blind3_bar
+                        width: 100
+                        height: 10
+                        align: LEFT_MID
+                        x: 100
+                        y: 0
+                        min_value: 0
+                        max_value: 100
+                        value: 0
+                    - label:
+                        id: blind3_pct
+                        text: "–"
+                        text_font: font_small
+                        text_color: col_text_dim
+                        align: LEFT_MID
+                        x: 204
+                        y: 0
+                        width: 34
+                    - button:
+                        id: blind3_btn_open
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 240
+                        y: 0
+                        bg_color: col_btn_open
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.open_cover
+                              data:
+                                entity_id: ${blind3_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e5d8"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+                    - button:
+                        id: blind3_btn_stop
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 269
+                        y: 0
+                        bg_color: col_btn_stop
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.stop_cover
+                              data:
+                                entity_id: ${blind3_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e047"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+                    - button:
+                        id: blind3_btn_close
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 291
+                        y: 0
+                        bg_color: col_btn_close
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.close_cover
+                              data:
+                                entity_id: ${blind3_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e5cf"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+
+              # ── Row 4 ────────────────────────────────────────────────────
+              - obj:
+                  id: blind4_row
+                  width: 320
+                  height: 40
+                  x: 0
+                  y: 126
+                  align: TOP_LEFT
+                  bg_color: col_bg
+                  radius: 0
+                  border_width: 0
+                  pad_all: 0
+                  widgets:
+                    - obj:
+                        id: blind4_dot
+                        width: 12
+                        height: 12
+                        radius: 6
+                        bg_color: "555555"
+                        bg_opa: COVER
+                        border_width: 0
+                        align: LEFT_MID
+                        x: 4
+                        y: 0
+                    - label:
+                        id: blind4_label
+                        text: ${blind4_name}
+                        text_font: font_small
+                        text_color: col_text
+                        align: LEFT_MID
+                        x: 20
+                        y: 0
+                        width: 78
+                        long_mode: CLIP
+                    - bar:
+                        id: blind4_bar
+                        width: 100
+                        height: 10
+                        align: LEFT_MID
+                        x: 100
+                        y: 0
+                        min_value: 0
+                        max_value: 100
+                        value: 0
+                    - label:
+                        id: blind4_pct
+                        text: "–"
+                        text_font: font_small
+                        text_color: col_text_dim
+                        align: LEFT_MID
+                        x: 204
+                        y: 0
+                        width: 34
+                    - button:
+                        id: blind4_btn_open
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 240
+                        y: 0
+                        bg_color: col_btn_open
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.open_cover
+                              data:
+                                entity_id: ${blind4_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e5d8"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+                    - button:
+                        id: blind4_btn_stop
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 269
+                        y: 0
+                        bg_color: col_btn_stop
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.stop_cover
+                              data:
+                                entity_id: ${blind4_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e047"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+                    - button:
+                        id: blind4_btn_close
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 291
+                        y: 0
+                        bg_color: col_btn_close
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.close_cover
+                              data:
+                                entity_id: ${blind4_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e5cf"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+
+              # ── Row 5 ────────────────────────────────────────────────────
+              - obj:
+                  id: blind5_row
+                  width: 320
+                  height: 40
+                  x: 0
+                  y: 168
+                  align: TOP_LEFT
+                  bg_color: col_card
+                  radius: 0
+                  border_width: 0
+                  pad_all: 0
+                  widgets:
+                    - obj:
+                        id: blind5_dot
+                        width: 12
+                        height: 12
+                        radius: 6
+                        bg_color: "555555"
+                        bg_opa: COVER
+                        border_width: 0
+                        align: LEFT_MID
+                        x: 4
+                        y: 0
+                    - label:
+                        id: blind5_label
+                        text: ${blind5_name}
+                        text_font: font_small
+                        text_color: col_text
+                        align: LEFT_MID
+                        x: 20
+                        y: 0
+                        width: 78
+                        long_mode: CLIP
+                    - bar:
+                        id: blind5_bar
+                        width: 100
+                        height: 10
+                        align: LEFT_MID
+                        x: 100
+                        y: 0
+                        min_value: 0
+                        max_value: 100
+                        value: 0
+                    - label:
+                        id: blind5_pct
+                        text: "–"
+                        text_font: font_small
+                        text_color: col_text_dim
+                        align: LEFT_MID
+                        x: 204
+                        y: 0
+                        width: 34
+                    - button:
+                        id: blind5_btn_open
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 240
+                        y: 0
+                        bg_color: col_btn_open
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.open_cover
+                              data:
+                                entity_id: ${blind5_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e5d8"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+                    - button:
+                        id: blind5_btn_stop
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 269
+                        y: 0
+                        bg_color: col_btn_stop
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.stop_cover
+                              data:
+                                entity_id: ${blind5_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e047"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+                    - button:
+                        id: blind5_btn_close
+                        width: 26
+                        height: 28
+                        align: LEFT_MID
+                        x: 291
+                        y: 0
+                        bg_color: col_btn_close
+                        on_click:
+                          - homeassistant.action:
+                              action: cover.close_cover
+                              data:
+                                entity_id: ${blind5_id}
+                        widgets:
+                          - label:
+                              text: "\U0000e5cf"
+                              text_font: font_icons
+                              text_color: col_text
+                              align: CENTER
+
+          # ================================================================
+          # TAB 3 — SCENES
+          # 2 × 3 grid of 100×65 buttons with teal border accent
+          # Column x positions: 5, 112, 219  (3 × 100px + 9px gaps + 5px margin)
+          # Row y positions:    20, 105       (2 × 65px + 30px top pad + 20px gap)
+          # ================================================================
+          - name: "Scenes"
+            id: tab_scenes
+            bg_color: col_bg
+            border_width: 0
+            pad_all: 0
+
+            widgets:
+              # Row 1
+              - button:
+                  id: scene1_btn
+                  width: 98
+                  height: 80
+                  x: 5
+                  y: 25
+                  align: TOP_LEFT
+                  bg_color: col_scene_btn
+                  radius: 8
+                  border_color: col_accent
+                  border_width: 1
+                  shadow_width: 0
+                  on_click:
+                    - homeassistant.action:
+                        action: scene.turn_on
+                        data:
+                          entity_id: ${scene1_id}
+                  widgets:
+                    - label:
+                        text: ${scene1_name}
+                        text_font: font_scene
+                        text_color: col_text
+                        align: CENTER
+                        long_mode: WRAP
+
+              - button:
+                  id: scene2_btn
+                  width: 98
+                  height: 80
+                  x: 111
+                  y: 25
+                  align: TOP_LEFT
+                  bg_color: col_scene_btn
+                  radius: 8
+                  border_color: col_accent
+                  border_width: 1
+                  shadow_width: 0
+                  on_click:
+                    - homeassistant.action:
+                        action: scene.turn_on
+                        data:
+                          entity_id: ${scene2_id}
+                  widgets:
+                    - label:
+                        text: ${scene2_name}
+                        text_font: font_scene
+                        text_color: col_text
+                        align: CENTER
+                        long_mode: WRAP
+
+              - button:
+                  id: scene3_btn
+                  width: 98
+                  height: 80
+                  x: 217
+                  y: 25
+                  align: TOP_LEFT
+                  bg_color: col_scene_btn
+                  radius: 8
+                  border_color: col_accent
+                  border_width: 1
+                  shadow_width: 0
+                  on_click:
+                    - homeassistant.action:
+                        action: scene.turn_on
+                        data:
+                          entity_id: ${scene3_id}
+                  widgets:
+                    - label:
+                        text: ${scene3_name}
+                        text_font: font_scene
+                        text_color: col_text
+                        align: CENTER
+                        long_mode: WRAP
+
+              # Row 2
+              - button:
+                  id: scene4_btn
+                  width: 98
+                  height: 80
+                  x: 5
+                  y: 115
+                  align: TOP_LEFT
+                  bg_color: col_scene_btn
+                  radius: 8
+                  border_color: col_accent
+                  border_width: 1
+                  shadow_width: 0
+                  on_click:
+                    - homeassistant.action:
+                        action: scene.turn_on
+                        data:
+                          entity_id: ${scene4_id}
+                  widgets:
+                    - label:
+                        text: ${scene4_name}
+                        text_font: font_scene
+                        text_color: col_text
+                        align: CENTER
+                        long_mode: WRAP
+
+              - button:
+                  id: scene5_btn
+                  width: 98
+                  height: 80
+                  x: 111
+                  y: 115
+                  align: TOP_LEFT
+                  bg_color: col_scene_btn
+                  radius: 8
+                  border_color: col_accent
+                  border_width: 1
+                  shadow_width: 0
+                  on_click:
+                    - homeassistant.action:
+                        action: scene.turn_on
+                        data:
+                          entity_id: ${scene5_id}
+                  widgets:
+                    - label:
+                        text: ${scene5_name}
+                        text_font: font_scene
+                        text_color: col_text
+                        align: CENTER
+                        long_mode: WRAP
+
+              - button:
+                  id: scene6_btn
+                  width: 98
+                  height: 80
+                  x: 217
+                  y: 115
+                  align: TOP_LEFT
+                  bg_color: col_scene_btn
+                  radius: 8
+                  border_color: col_accent
+                  border_width: 1
+                  shadow_width: 0
+                  on_click:
+                    - homeassistant.action:
+                        action: scene.turn_on
+                        data:
+                          entity_id: ${scene6_id}
+                  widgets:
+                    - label:
+                        text: ${scene6_name}
+                        text_font: font_scene
+                        text_color: col_text
+                        align: CENTER
+                        long_mode: WRAP

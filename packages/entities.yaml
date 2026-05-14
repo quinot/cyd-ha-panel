@@ -1,0 +1,350 @@
+# =============================================================================
+# Entities package — Home Assistant sensor imports
+#
+# Imports cover position (0–100) and cover state for:
+#   • 5 roof windows  (win1 … win5)
+#   • 5 blinds        (blind1 … blind5)
+#
+# Entity IDs and display names are all substitutions defined in the
+# top-level cyd-ha-panel.yaml, so nothing here needs to change when
+# you rename or reassign covers.
+#
+# State dot colours:
+#   open     → green  #4caf50
+#   opening  → teal   #00b4d8
+#   closing  → orange #ff9800
+#   stopped  → yellow #ffeb3b
+#   closed   → grey   #555555
+# =============================================================================
+
+sensor:
+
+  # ── Window positions ──────────────────────────────────────────────────────
+
+  - platform: homeassistant
+    id: win1_pos
+    entity_id: ${win1_id}
+    attribute: current_position
+    internal: true
+    on_value:
+      then:
+        - lvgl.bar.update:
+            id: win1_bar
+            value: !lambda "return (int)x;"
+        - lvgl.label.update:
+            id: win1_pct
+            text: !lambda |-
+              char buf[8];
+              snprintf(buf, sizeof(buf), "%d%%", (int)x);
+              return std::string(buf);
+
+  - platform: homeassistant
+    id: win2_pos
+    entity_id: ${win2_id}
+    attribute: current_position
+    internal: true
+    on_value:
+      then:
+        - lvgl.bar.update:
+            id: win2_bar
+            value: !lambda "return (int)x;"
+        - lvgl.label.update:
+            id: win2_pct
+            text: !lambda |-
+              char buf[8];
+              snprintf(buf, sizeof(buf), "%d%%", (int)x);
+              return std::string(buf);
+
+  - platform: homeassistant
+    id: win3_pos
+    entity_id: ${win3_id}
+    attribute: current_position
+    internal: true
+    on_value:
+      then:
+        - lvgl.bar.update:
+            id: win3_bar
+            value: !lambda "return (int)x;"
+        - lvgl.label.update:
+            id: win3_pct
+            text: !lambda |-
+              char buf[8];
+              snprintf(buf, sizeof(buf), "%d%%", (int)x);
+              return std::string(buf);
+
+  - platform: homeassistant
+    id: win4_pos
+    entity_id: ${win4_id}
+    attribute: current_position
+    internal: true
+    on_value:
+      then:
+        - lvgl.bar.update:
+            id: win4_bar
+            value: !lambda "return (int)x;"
+        - lvgl.label.update:
+            id: win4_pct
+            text: !lambda |-
+              char buf[8];
+              snprintf(buf, sizeof(buf), "%d%%", (int)x);
+              return std::string(buf);
+
+  - platform: homeassistant
+    id: win5_pos
+    entity_id: ${win5_id}
+    attribute: current_position
+    internal: true
+    on_value:
+      then:
+        - lvgl.bar.update:
+            id: win5_bar
+            value: !lambda "return (int)x;"
+        - lvgl.label.update:
+            id: win5_pct
+            text: !lambda |-
+              char buf[8];
+              snprintf(buf, sizeof(buf), "%d%%", (int)x);
+              return std::string(buf);
+
+  # ── Blind positions ───────────────────────────────────────────────────────
+
+  - platform: homeassistant
+    id: blind1_pos
+    entity_id: ${blind1_id}
+    attribute: current_position
+    internal: true
+    on_value:
+      then:
+        - lvgl.bar.update:
+            id: blind1_bar
+            value: !lambda "return (int)x;"
+        - lvgl.label.update:
+            id: blind1_pct
+            text: !lambda |-
+              char buf[8];
+              snprintf(buf, sizeof(buf), "%d%%", (int)x);
+              return std::string(buf);
+
+  - platform: homeassistant
+    id: blind2_pos
+    entity_id: ${blind2_id}
+    attribute: current_position
+    internal: true
+    on_value:
+      then:
+        - lvgl.bar.update:
+            id: blind2_bar
+            value: !lambda "return (int)x;"
+        - lvgl.label.update:
+            id: blind2_pct
+            text: !lambda |-
+              char buf[8];
+              snprintf(buf, sizeof(buf), "%d%%", (int)x);
+              return std::string(buf);
+
+  - platform: homeassistant
+    id: blind3_pos
+    entity_id: ${blind3_id}
+    attribute: current_position
+    internal: true
+    on_value:
+      then:
+        - lvgl.bar.update:
+            id: blind3_bar
+            value: !lambda "return (int)x;"
+        - lvgl.label.update:
+            id: blind3_pct
+            text: !lambda |-
+              char buf[8];
+              snprintf(buf, sizeof(buf), "%d%%", (int)x);
+              return std::string(buf);
+
+  - platform: homeassistant
+    id: blind4_pos
+    entity_id: ${blind4_id}
+    attribute: current_position
+    internal: true
+    on_value:
+      then:
+        - lvgl.bar.update:
+            id: blind4_bar
+            value: !lambda "return (int)x;"
+        - lvgl.label.update:
+            id: blind4_pct
+            text: !lambda |-
+              char buf[8];
+              snprintf(buf, sizeof(buf), "%d%%", (int)x);
+              return std::string(buf);
+
+  - platform: homeassistant
+    id: blind5_pos
+    entity_id: ${blind5_id}
+    attribute: current_position
+    internal: true
+    on_value:
+      then:
+        - lvgl.bar.update:
+            id: blind5_bar
+            value: !lambda "return (int)x;"
+        - lvgl.label.update:
+            id: blind5_pct
+            text: !lambda |-
+              char buf[8];
+              snprintf(buf, sizeof(buf), "%d%%", (int)x);
+              return std::string(buf);
+
+text_sensor:
+
+  # ── Window states ─────────────────────────────────────────────────────────
+
+  - platform: homeassistant
+    id: win1_state
+    entity_id: ${win1_id}
+    internal: true
+    on_value:
+      then:
+        - lambda: |-
+            lv_color_t c;
+            if      (x == "open")    c = lv_color_hex(0x4caf50);
+            else if (x == "opening") c = lv_color_hex(0x00b4d8);
+            else if (x == "closing") c = lv_color_hex(0xff9800);
+            else if (x == "stopped") c = lv_color_hex(0xffeb3b);
+            else                     c = lv_color_hex(0x555555);
+            lv_obj_set_style_bg_color(id(win1_dot), c, LV_PART_MAIN);
+
+  - platform: homeassistant
+    id: win2_state
+    entity_id: ${win2_id}
+    internal: true
+    on_value:
+      then:
+        - lambda: |-
+            lv_color_t c;
+            if      (x == "open")    c = lv_color_hex(0x4caf50);
+            else if (x == "opening") c = lv_color_hex(0x00b4d8);
+            else if (x == "closing") c = lv_color_hex(0xff9800);
+            else if (x == "stopped") c = lv_color_hex(0xffeb3b);
+            else                     c = lv_color_hex(0x555555);
+            lv_obj_set_style_bg_color(id(win2_dot), c, LV_PART_MAIN);
+
+  - platform: homeassistant
+    id: win3_state
+    entity_id: ${win3_id}
+    internal: true
+    on_value:
+      then:
+        - lambda: |-
+            lv_color_t c;
+            if      (x == "open")    c = lv_color_hex(0x4caf50);
+            else if (x == "opening") c = lv_color_hex(0x00b4d8);
+            else if (x == "closing") c = lv_color_hex(0xff9800);
+            else if (x == "stopped") c = lv_color_hex(0xffeb3b);
+            else                     c = lv_color_hex(0x555555);
+            lv_obj_set_style_bg_color(id(win3_dot), c, LV_PART_MAIN);
+
+  - platform: homeassistant
+    id: win4_state
+    entity_id: ${win4_id}
+    internal: true
+    on_value:
+      then:
+        - lambda: |-
+            lv_color_t c;
+            if      (x == "open")    c = lv_color_hex(0x4caf50);
+            else if (x == "opening") c = lv_color_hex(0x00b4d8);
+            else if (x == "closing") c = lv_color_hex(0xff9800);
+            else if (x == "stopped") c = lv_color_hex(0xffeb3b);
+            else                     c = lv_color_hex(0x555555);
+            lv_obj_set_style_bg_color(id(win4_dot), c, LV_PART_MAIN);
+
+  - platform: homeassistant
+    id: win5_state
+    entity_id: ${win5_id}
+    internal: true
+    on_value:
+      then:
+        - lambda: |-
+            lv_color_t c;
+            if      (x == "open")    c = lv_color_hex(0x4caf50);
+            else if (x == "opening") c = lv_color_hex(0x00b4d8);
+            else if (x == "closing") c = lv_color_hex(0xff9800);
+            else if (x == "stopped") c = lv_color_hex(0xffeb3b);
+            else                     c = lv_color_hex(0x555555);
+            lv_obj_set_style_bg_color(id(win5_dot), c, LV_PART_MAIN);
+
+  # ── Blind states ──────────────────────────────────────────────────────────
+
+  - platform: homeassistant
+    id: blind1_state
+    entity_id: ${blind1_id}
+    internal: true
+    on_value:
+      then:
+        - lambda: |-
+            lv_color_t c;
+            if      (x == "open")    c = lv_color_hex(0x4caf50);
+            else if (x == "opening") c = lv_color_hex(0x00b4d8);
+            else if (x == "closing") c = lv_color_hex(0xff9800);
+            else if (x == "stopped") c = lv_color_hex(0xffeb3b);
+            else                     c = lv_color_hex(0x555555);
+            lv_obj_set_style_bg_color(id(blind1_dot), c, LV_PART_MAIN);
+
+  - platform: homeassistant
+    id: blind2_state
+    entity_id: ${blind2_id}
+    internal: true
+    on_value:
+      then:
+        - lambda: |-
+            lv_color_t c;
+            if      (x == "open")    c = lv_color_hex(0x4caf50);
+            else if (x == "opening") c = lv_color_hex(0x00b4d8);
+            else if (x == "closing") c = lv_color_hex(0xff9800);
+            else if (x == "stopped") c = lv_color_hex(0xffeb3b);
+            else                     c = lv_color_hex(0x555555);
+            lv_obj_set_style_bg_color(id(blind2_dot), c, LV_PART_MAIN);
+
+  - platform: homeassistant
+    id: blind3_state
+    entity_id: ${blind3_id}
+    internal: true
+    on_value:
+      then:
+        - lambda: |-
+            lv_color_t c;
+            if      (x == "open")    c = lv_color_hex(0x4caf50);
+            else if (x == "opening") c = lv_color_hex(0x00b4d8);
+            else if (x == "closing") c = lv_color_hex(0xff9800);
+            else if (x == "stopped") c = lv_color_hex(0xffeb3b);
+            else                     c = lv_color_hex(0x555555);
+            lv_obj_set_style_bg_color(id(blind3_dot), c, LV_PART_MAIN);
+
+  - platform: homeassistant
+    id: blind4_state
+    entity_id: ${blind4_id}
+    internal: true
+    on_value:
+      then:
+        - lambda: |-
+            lv_color_t c;
+            if      (x == "open")    c = lv_color_hex(0x4caf50);
+            else if (x == "opening") c = lv_color_hex(0x00b4d8);
+            else if (x == "closing") c = lv_color_hex(0xff9800);
+            else if (x == "stopped") c = lv_color_hex(0xffeb3b);
+            else                     c = lv_color_hex(0x555555);
+            lv_obj_set_style_bg_color(id(blind4_dot), c, LV_PART_MAIN);
+
+  - platform: homeassistant
+    id: blind5_state
+    entity_id: ${blind5_id}
+    internal: true
+    on_value:
+      then:
+        - lambda: |-
+            lv_color_t c;
+            if      (x == "open")    c = lv_color_hex(0x4caf50);
+            else if (x == "opening") c = lv_color_hex(0x00b4d8);
+            else if (x == "closing") c = lv_color_hex(0xff9800);
+            else if (x == "stopped") c = lv_color_hex(0xffeb3b);
+            else                     c = lv_color_hex(0x555555);
+            lv_obj_set_style_bg_color(id(blind5_dot), c, LV_PART_MAIN);
