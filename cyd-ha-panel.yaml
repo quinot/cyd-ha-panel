@@ -32,28 +32,28 @@ substitutions:
   # ── Roof windows (5 × cover entity) ───────────────────────────────────────
   # Replace entity IDs with your actual cover entities from HA.
   # Names are truncated to ~10 chars on screen (font_small, 78px wide).
-  win1_id:   cover.velux_salon
-  win1_name: "Salon"
-  win2_id:   cover.velux_chambre_1
-  win2_name: "Ch. 1"
-  win3_id:   cover.velux_chambre_2
-  win3_name: "Ch. 2"
-  win4_id:   cover.velux_bureau
-  win4_name: "Bureau"
-  win5_id:   cover.velux_salle_de_bain
-  win5_name: "SdB"
+  win1_id:   cover.velux_window_roof_window
+  win1_name: "Salon 1"
+  win2_id:   cover.velux_window_roof_window_2
+  win2_name: "Salon 2"
+  win3_id:   cover.velux_window_roof_window_3
+  win3_name: "Salon 3"
+  win4_id:   cover.velux_window_roof_window_4
+  win4_name: "Salon 4"
+  win5_id:   cover.velux_window_roof_window_5
+  win5_name: "Cuisine"
 
   # ── Blinds (5 × cover entity) ─────────────────────────────────────────────
-  blind1_id:   cover.store_salon
-  blind1_name: "Salon"
-  blind2_id:   cover.store_chambre_1
-  blind2_name: "Ch. 1"
-  blind3_id:   cover.store_chambre_2
-  blind3_name: "Ch. 2"
-  blind4_id:   cover.store_bureau
-  blind4_name: "Bureau"
-  blind5_id:   cover.store_salle_de_bain
-  blind5_name: "SdB"
+  blind1_id:   cover.velux_internal_cover_blinds
+  blind1_name: "Salon 1"
+  blind2_id:   cover.velux_internal_cover_blinds_2
+  blind2_name: "Salon 2"
+  blind3_id:   cover.velux_internal_cover_blinds_3
+  blind3_name: "Salon 3"
+  blind4_id:   cover.velux_internal_cover_blinds_4
+  blind4_name: "Salon 4"
+  blind5_id:   cover.velux_internal_cover_blinds_5
+  blind5_name: "Cuisine"
 
   # ── Scenes (6 × scene entity, 2 rows × 3 columns) ─────────────────────────
   # Labels wrap inside 98×80px buttons; keep them short (≤ 12 chars).
@@ -65,10 +65,10 @@ substitutions:
   scene3_name: "Nuit"
   scene4_id:   scene.absent
   scene4_name: "Absent"
-  scene5_id:   scene.film
-  scene5_name: "Film"
-  scene6_id:   scene.tout_ouvrir
-  scene6_name: "Tout ouvrir"
+  scene5_id:   scene.home_cinema
+  scene5_name: "Home cinéma"
+  scene6_id:   scene.aeration
+  scene6_name: "Aération"
 
 # =============================================================================
 # Core ESPHome config

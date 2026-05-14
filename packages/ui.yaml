@@ -50,31 +50,41 @@ color:
 # ---------------------------------------------------------------------------
 font:
   # Labels — row names, percentages, tab labels
+  # extras: adds accented French glyphs (ESPHome only embeds explicitly listed chars)
   - file: "gfonts://Roboto"
     id: font_small
     size: 11
     bpp: 4
+    extras:
+      - file: "gfonts://Roboto"
+        glyphs: "àâäéèêëîïôùûüÿçæœÀÂÄÉÈÊËÎÏÔÙÛÜŸÇÆŒ"
 
   - file: "gfonts://Roboto"
     id: font_medium
     size: 14
     bpp: 4
+    extras:
+      - file: "gfonts://Roboto"
+        glyphs: "àâäéèêëîïôùûüÿçæœÀÂÄÉÈÊËÎÏÔÙÛÜŸÇÆŒ"
 
   # Scene button text
   - file: "gfonts://Roboto@700"
     id: font_scene
     size: 13
     bpp: 4
+    extras:
+      - file: "gfonts://Roboto@700"
+        glyphs: "àâäéèêëîïôùûüÿçæœÀÂÄÉÈÊËÎÏÔÙÛÜŸÇÆŒ"
 
   # Control button icons — only the 3 glyphs we need (saves flash)
-  - file: "gfonts://Material+Symbols+Outlined"
+  - file: "gfonts://Material+Symbols+Rounded"
     id: font_icons
     size: 16
     bpp: 4
     glyphs:
-      - "\U0000e5d8"   # expand_less  — Open  (▲)
-      - "\U0000e047"   # stop         — Stop  (■)
-      - "\U0000e5cf"   # expand_more  — Close (▼)
+      - "\U0000e5d8"   # arrow_upward   — Open  (solid arrow up)
+      - "\U0000e047"   # stop           — Stop  (■)
+      - "\U0000e5db"   # arrow_downward — Close (solid arrow down)
 
 # ---------------------------------------------------------------------------
 # LVGL configuration
@@ -261,7 +271,7 @@ lvgl:
                                 entity_id: ${win1_id}
                         widgets:
                           - label:
-                              text: "\U0000e5cf"
+                              text: "\U0000e5db"
                               text_font: font_icons
                               text_color: col_text
                               align: CENTER
@@ -372,7 +382,7 @@ lvgl:
                                 entity_id: ${win2_id}
                         widgets:
                           - label:
-                              text: "\U0000e5cf"
+                              text: "\U0000e5db"
                               text_font: font_icons
                               text_color: col_text
                               align: CENTER
@@ -483,7 +493,7 @@ lvgl:
                                 entity_id: ${win3_id}
                         widgets:
                           - label:
-                              text: "\U0000e5cf"
+                              text: "\U0000e5db"
                               text_font: font_icons
                               text_color: col_text
                               align: CENTER
@@ -594,7 +604,7 @@ lvgl:
                                 entity_id: ${win4_id}
                         widgets:
                           - label:
-                              text: "\U0000e5cf"
+                              text: "\U0000e5db"
                               text_font: font_icons
                               text_color: col_text
                               align: CENTER
@@ -705,7 +715,7 @@ lvgl:
                                 entity_id: ${win5_id}
                         widgets:
                           - label:
-                              text: "\U0000e5cf"
+                              text: "\U0000e5db"
                               text_font: font_icons
                               text_color: col_text
                               align: CENTER
@@ -829,7 +839,7 @@ lvgl:
                                 entity_id: ${blind1_id}
                         widgets:
                           - label:
-                              text: "\U0000e5cf"
+                              text: "\U0000e5db"
                               text_font: font_icons
                               text_color: col_text
                               align: CENTER
@@ -940,7 +950,7 @@ lvgl:
                                 entity_id: ${blind2_id}
                         widgets:
                           - label:
-                              text: "\U0000e5cf"
+                              text: "\U0000e5db"
                               text_font: font_icons
                               text_color: col_text
                               align: CENTER
@@ -1051,7 +1061,7 @@ lvgl:
                                 entity_id: ${blind3_id}
                         widgets:
                           - label:
-                              text: "\U0000e5cf"
+                              text: "\U0000e5db"
                               text_font: font_icons
                               text_color: col_text
                               align: CENTER
@@ -1162,7 +1172,7 @@ lvgl:
                                 entity_id: ${blind4_id}
                         widgets:
                           - label:
-                              text: "\U0000e5cf"
+                              text: "\U0000e5db"
                               text_font: font_icons
                               text_color: col_text
                               align: CENTER
@@ -1273,7 +1283,7 @@ lvgl:
                                 entity_id: ${blind5_id}
                         widgets:
                           - label:
-                              text: "\U0000e5cf"
+                              text: "\U0000e5db"
                               text_font: font_icons
                               text_color: col_text
                               align: CENTER
