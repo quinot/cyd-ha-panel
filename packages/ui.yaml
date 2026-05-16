@@ -132,8 +132,8 @@ lvgl:
         bg_opa: COVER
 
   pages:
-    - !include ui_page_main.yaml
-    - !include ui_page_screensaver.yaml
+    - !include ui_main.yaml
+    - !include ui_screensaver.yaml
 
   on_idle:
     - timeout: ${screensaver_timeout}s

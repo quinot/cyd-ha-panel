@@ -1,0 +1,112 @@
+# =============================================================================
+# Scenes tab — 2×2 grid of 148×85px buttons
+# Columns: x=8, x=164  (148px wide, 8px gap, 8px margins)
+# Rows:    y=15, y=110  (85px tall, 10px gap, 15px top margin)
+# =============================================================================
+name: "Scenes"
+id: tab_scenes
+bg_color: col_bg
+border_width: 0
+pad_all: 0
+scrollbar_mode: "off"
+
+widgets:
+  - button:
+      id: scene1_btn
+      width: 148
+      height: 85
+      x: 8
+      y: 15
+      align: TOP_LEFT
+      bg_color: col_scene_btn
+      radius: 8
+      border_color: col_accent
+      border_width: 1
+      shadow_width: 0
+      on_click:
+        - homeassistant.action:
+            action: scene.turn_on
+            data:
+              entity_id: ${scene1_id}
+      widgets:
+        - label:
+            text: ${scene1_name}
+            text_font: font_scene
+            text_color: col_text
+            align: CENTER
+            long_mode: WRAP
+
+  - button:
+      id: scene2_btn
+      width: 148
+      height: 85
+      x: 164
+      y: 15
+      align: TOP_LEFT
+      bg_color: col_scene_btn
+      radius: 8
+      border_color: col_accent
+      border_width: 1
+      shadow_width: 0
+      on_click:
+        - homeassistant.action:
+            action: scene.turn_on
+            data:
+              entity_id: ${scene2_id}
+      widgets:
+        - label:
+            text: ${scene2_name}
+            text_font: font_scene
+            text_color: col_text
+            align: CENTER
+            long_mode: WRAP
+
+  - button:
+      id: scene3_btn
+      width: 148
+      height: 85
+      x: 8
+      y: 110
+      align: TOP_LEFT
+      bg_color: col_scene_btn
+      radius: 8
+      border_color: col_accent
+      border_width: 1
+      shadow_width: 0
+      on_click:
+        - homeassistant.action:
+            action: scene.turn_on
+            data:
+              entity_id: ${scene3_id}
+      widgets:
+        - label:
+            text: ${scene3_name}
+            text_font: font_scene
+            text_color: col_text
+            align: CENTER
+            long_mode: WRAP
+
+  - button:
+      id: scene4_btn
+      width: 148
+      height: 85
+      x: 164
+      y: 110
+      align: TOP_LEFT
+      bg_color: col_scene_btn
+      radius: 8
+      border_color: col_accent
+      border_width: 1
+      shadow_width: 0
+      on_click:
+        - homeassistant.action:
+            action: scene.turn_on
+            data:
+              entity_id: ${scene4_id}
+      widgets:
+        - label:
+            text: ${scene4_name}
+            text_font: font_scene
+            text_color: col_text
+            align: CENTER
+            long_mode: WRAP
