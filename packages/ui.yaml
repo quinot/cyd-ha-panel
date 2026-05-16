@@ -62,8 +62,8 @@ font:
     extras:
       - file: "gfonts://Roboto"
         glyphs: "àâäéèêëîïôùûüÿçæœÀÂÄÉÈÊËÎÏÔÙÛÜŸÇÆŒ"
-      - file: "gfonts://Noto+Sans+Symbols+2"
-        glyphs: "▂▄▆█"   # signal strength bars
+      - file: "packages/fonts/DejaVuSansMono.ttf"
+        glyphs: "▂▄▆█"   # block elements U+2582/2584/2586/2588 — DejaVu Sans Mono
 
   - file: "gfonts://Roboto@700"
     id: font_scene
@@ -73,14 +73,11 @@ font:
       - file: "gfonts://Roboto@700"
         glyphs: "àâäéèêëîïôùûüÿçæœÀÂÄÉÈÊËÎÏÔÙÛÜŸÇÆŒ"
 
-  - file: "gfonts://Material+Symbols+Rounded"
+  - file: "packages/fonts/DejaVuSans.ttf"
     id: font_icons
     size: 16
     bpp: 4
-    glyphs:
-      - "\U0000e5d8"   # arrow_upward   — Open
-      - "\U0000e047"   # stop           — Stop
-      - "\U0000e5db"   # arrow_downward — Close
+    glyphs: "▲■▼"   # U+25B2 U+25A0 U+25BC — Open / Stop / Close buttons
 
   - file: "gfonts://Roboto"
     id: font_clock

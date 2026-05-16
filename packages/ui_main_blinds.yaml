@@ -79,7 +79,7 @@ widgets:
                     entity_id: ${blind1_id}
             widgets:
               - label:
-                  text: "\U0000e5d8"
+                  text: "▲"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -98,7 +98,7 @@ widgets:
                     entity_id: ${blind1_id}
             widgets:
               - label:
-                  text: "\U0000e047"
+                  text: "■"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -117,7 +117,7 @@ widgets:
                     entity_id: ${blind1_id}
             widgets:
               - label:
-                  text: "\U0000e5db"
+                  text: "▼"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -190,7 +190,7 @@ widgets:
                     entity_id: ${blind2_id}
             widgets:
               - label:
-                  text: "\U0000e5d8"
+                  text: "▲"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -209,7 +209,7 @@ widgets:
                     entity_id: ${blind2_id}
             widgets:
               - label:
-                  text: "\U0000e047"
+                  text: "■"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -228,7 +228,7 @@ widgets:
                     entity_id: ${blind2_id}
             widgets:
               - label:
-                  text: "\U0000e5db"
+                  text: "▼"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -301,7 +301,7 @@ widgets:
                     entity_id: ${blind3_id}
             widgets:
               - label:
-                  text: "\U0000e5d8"
+                  text: "▲"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -320,7 +320,7 @@ widgets:
                     entity_id: ${blind3_id}
             widgets:
               - label:
-                  text: "\U0000e047"
+                  text: "■"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -339,7 +339,7 @@ widgets:
                     entity_id: ${blind3_id}
             widgets:
               - label:
-                  text: "\U0000e5db"
+                  text: "▼"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -412,7 +412,7 @@ widgets:
                     entity_id: ${blind4_id}
             widgets:
               - label:
-                  text: "\U0000e5d8"
+                  text: "▲"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -431,7 +431,7 @@ widgets:
                     entity_id: ${blind4_id}
             widgets:
               - label:
-                  text: "\U0000e047"
+                  text: "■"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -450,7 +450,7 @@ widgets:
                     entity_id: ${blind4_id}
             widgets:
               - label:
-                  text: "\U0000e5db"
+                  text: "▼"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -523,7 +523,7 @@ widgets:
                     entity_id: ${blind5_id}
             widgets:
               - label:
-                  text: "\U0000e5d8"
+                  text: "▲"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -542,7 +542,7 @@ widgets:
                     entity_id: ${blind5_id}
             widgets:
               - label:
-                  text: "\U0000e047"
+                  text: "■"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -561,7 +561,7 @@ widgets:
                     entity_id: ${blind5_id}
             widgets:
               - label:
-                  text: "\U0000e5db"
+                  text: "▼"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER

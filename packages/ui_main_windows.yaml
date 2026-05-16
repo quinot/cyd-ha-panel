@@ -83,7 +83,7 @@ widgets:
                     entity_id: ${win1_id}
             widgets:
               - label:
-                  text: "\U0000e5d8"
+                  text: "▲"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -102,7 +102,7 @@ widgets:
                     entity_id: ${win1_id}
             widgets:
               - label:
-                  text: "\U0000e047"
+                  text: "■"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -121,7 +121,7 @@ widgets:
                     entity_id: ${win1_id}
             widgets:
               - label:
-                  text: "\U0000e5db"
+                  text: "▼"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -194,7 +194,7 @@ widgets:
                     entity_id: ${win2_id}
             widgets:
               - label:
-                  text: "\U0000e5d8"
+                  text: "▲"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -213,7 +213,7 @@ widgets:
                     entity_id: ${win2_id}
             widgets:
               - label:
-                  text: "\U0000e047"
+                  text: "■"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -232,7 +232,7 @@ widgets:
                     entity_id: ${win2_id}
             widgets:
               - label:
-                  text: "\U0000e5db"
+                  text: "▼"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -305,7 +305,7 @@ widgets:
                     entity_id: ${win3_id}
             widgets:
               - label:
-                  text: "\U0000e5d8"
+                  text: "▲"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -324,7 +324,7 @@ widgets:
                     entity_id: ${win3_id}
             widgets:
               - label:
-                  text: "\U0000e047"
+                  text: "■"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -343,7 +343,7 @@ widgets:
                     entity_id: ${win3_id}
             widgets:
               - label:
-                  text: "\U0000e5db"
+                  text: "▼"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -416,7 +416,7 @@ widgets:
                     entity_id: ${win4_id}
             widgets:
               - label:
-                  text: "\U0000e5d8"
+                  text: "▲"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -435,7 +435,7 @@ widgets:
                     entity_id: ${win4_id}
             widgets:
               - label:
-                  text: "\U0000e047"
+                  text: "■"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -454,7 +454,7 @@ widgets:
                     entity_id: ${win4_id}
             widgets:
               - label:
-                  text: "\U0000e5db"
+                  text: "▼"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -527,7 +527,7 @@ widgets:
                     entity_id: ${win5_id}
             widgets:
               - label:
-                  text: "\U0000e5d8"
+                  text: "▲"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -546,7 +546,7 @@ widgets:
                     entity_id: ${win5_id}
             widgets:
               - label:
-                  text: "\U0000e047"
+                  text: "■"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER
@@ -565,7 +565,7 @@ widgets:
                     entity_id: ${win5_id}
             widgets:
               - label:
-                  text: "\U0000e5db"
+                  text: "▼"
                   text_font: font_icons
                   text_color: col_text
                   align: CENTER

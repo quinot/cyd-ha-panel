@@ -30,26 +30,36 @@ widgets:
       widgets:
         - label:
             id: info_time
+            width: 100%
+            text_align: CENTER
             text: "--:--:--"
             text_font: font_clock
             text_color: col_ss_time
         - label:
             id: info_date
+            width: 100%
+            text_align: CENTER
             text: "--- -- --- ----"
             text_font: font_clock_date
             text_color: col_ss_date
         - label:
             id: info_ldr
+            width: 100%
+            text_align: CENTER
             text: "LDR: -.--V"
             text_font: font_medium
             text_color: col_text_dim
         - label:
             id: info_ssid
+            width: 100%
+            text_align: CENTER
             text: "WiFi: ..."
             text_font: font_medium
             text_color: col_text_dim
         - label:
             id: info_signal
+            width: 100%
+            text_align: CENTER
             text: "Signal: ... dBm"
             text_font: font_medium
             text_color: col_text_dim
