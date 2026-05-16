@@ -40,7 +40,7 @@ globals:
     initial_value: '0'
 
   # Current container position (top-left corner of ss_container)
-  # Bounds: x ∈ [0, 100],  y ∈ [0, 164]  (screen 320×240, container 220×76)
+  # Bounds: x ∈ [0, 320−w],  y ∈ [0, 240−h]  (computed at runtime from rendered size)
   - id: ss_x
     type: int
     restore_value: no
@@ -95,13 +95,16 @@ interval:
           // ── Move container only while screensaver is active ──────────────
           if (!id(screensaver_active)) return;
 
+          int x_max = 320 - (int)lv_obj_get_width(id(ss_container));
+          int y_max = 240 - (int)lv_obj_get_height(id(ss_container));
+
           id(ss_x) += id(ss_dx);
           id(ss_y) += id(ss_dy);
 
-          if (id(ss_x) <= 0)   { id(ss_x) = 0;   id(ss_dx) =  1; }
-          if (id(ss_x) >= 100) { id(ss_x) = 100;  id(ss_dx) = -1; }
-          if (id(ss_y) <= 0)   { id(ss_y) = 0;    id(ss_dy) =  1; }
-          if (id(ss_y) >= 164) { id(ss_y) = 164;  id(ss_dy) = -1; }
+          if (id(ss_x) <= 0)      { id(ss_x) = 0;      id(ss_dx) =  1; }
+          if (id(ss_x) >= x_max)  { id(ss_x) = x_max;  id(ss_dx) = -1; }
+          if (id(ss_y) <= 0)      { id(ss_y) = 0;      id(ss_dy) =  1; }
+          if (id(ss_y) >= y_max)  { id(ss_y) = y_max;  id(ss_dy) = -1; }
 
           lv_obj_set_pos(id(ss_container), id(ss_x), id(ss_y));
 

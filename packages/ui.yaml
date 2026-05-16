@@ -1435,39 +1435,35 @@ lvgl:
       bg_color: col_black
       widgets:
         # Container: moved each second by the screensaver interval.
-        # Size: ~220px wide × 76px tall (48px time + 4px gap + 20px date)
-        # Movement range: x 0–100, y 0–164 (320−220, 240−76)
+        # Width/height auto-fit to content (SIZE_CONTENT); movement bounds are
+        # computed at runtime from the actual rendered size (320−w, 240−h).
         - obj:
             id: ss_container
             x: 50
             y: 82
-            width: 220
-            height: 76
+            width: SIZE_CONTENT
+            height: SIZE_CONTENT
             bg_color: col_black
             bg_opa: COVER
             border_width: 0
             pad_all: 0
+            layout:
+              type: FLEX
+              flex_flow: COLUMN
+              flex_align_main: START
+              flex_align_cross: CENTER
+              pad_row: 4
             widgets:
               - label:
                   id: ss_time
                   text: "--:--:--"
                   text_font: font_clock
                   text_color: col_ss_time
-                  bg_opa: TRANSP
-                  x: 0
-                  y: 0
-                  width: 220
-                  long_mode: CLIP
               - label:
                   id: ss_date
-                  text: "--- -- ----"
+                  text: "--- -- --- ----"
                   text_font: font_clock_date
                   text_color: col_ss_date
-                  bg_opa: TRANSP
-                  x: 2
-                  y: 56
-                  width: 220
-                  long_mode: CLIP
 
   # ── Idle → screensaver ────────────────────────────────────────────────────────
   on_idle:
