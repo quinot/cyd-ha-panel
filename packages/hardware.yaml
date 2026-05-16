@@ -10,6 +10,8 @@
 #   NOTE: some boards use SDA=21/SCL=22 — swap if touch is unresponsive
 #
 # RGB LED : active-low (inverted) on GPIO4/16/17
+#
+# Light   : LDR ambient light sensor on GPIO34 (ADC1_CH6, input-only)
 # =============================================================================
 
 # ---------------------------------------------------------------------------
@@ -126,3 +128,22 @@ display:
     # LVGL owns all rendering — no lambda block allowed when using LVGL
     auto_clear_enabled: false
     update_interval: never
+
+# ---------------------------------------------------------------------------
+# Ambient light sensor — GT36516 photoresistor on GPIO34 (ADC1_CH6, input-only)
+# Circuit: 3.3V → R15 (1MΩ) → IO34 → (R19 1MΩ ∥ GT36516) → GND
+# Bright → low photoresistor resistance → parallel ≈ 0 Ω → V_IO34 ≈ 0 V
+# Dark   → high photoresistor resistance → parallel ≈ 1 MΩ → V_IO34 ≈ 1.65 V
+# 6 dB attenuation (0–1.75 V range) covers the full output with better resolution
+# than 11 dB.
+# ---------------------------------------------------------------------------
+sensor:
+  - platform: adc
+    pin: GPIO34
+    name: "CYD Ambient Light"
+    attenuation: 6db       # 0–1.75 V range; max dark-state voltage ≈ 1.65 V
+    update_interval: 10s
+    filters:
+      - median:
+          window_size: 5
+          send_every: 5
