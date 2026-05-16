@@ -16,6 +16,7 @@ widgets:
       pad_all: 0
       position: BOTTOM
       size: 30
+      text_font: font_medium
       tabs:
         - !include ui_main_scenes.yaml
         - !include ui_main_windows.yaml
