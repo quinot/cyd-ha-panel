@@ -74,8 +74,8 @@ interval:
             // month is 1–12
             if (t.month >= 1 && t.month <= 12 && t.day_of_week >= 1 && t.day_of_week <= 7) {
               const char* days[]   = {"Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"};
-              const char* months[] = {"jan.", "fev.", "mar.", "avr.", "mai", "juin",
-                                      "juil.", "aout", "sept.", "oct.", "nov.", "dec."};
+              const char* months[] = {"jan.", "fév.", "mar.", "avr.", "mai", "juin",
+                                      "juil.", "août", "sept.", "oct.", "nov.", "déc."};
               char dbuf[32];
               snprintf(dbuf, sizeof(dbuf), "%s %d %s %d",
                        days[t.day_of_week - 1],
