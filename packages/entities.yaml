@@ -37,6 +37,7 @@ sensor:
               char buf[8];
               snprintf(buf, sizeof(buf), "%d%%", (int)x);
               return std::string(buf);
+        - lambda: "cover_update_buttons(id(win1_btn_open), id(win1_btn_close), x);"
 
   - platform: homeassistant
     id: win2_pos
@@ -54,6 +55,7 @@ sensor:
               char buf[8];
               snprintf(buf, sizeof(buf), "%d%%", (int)x);
               return std::string(buf);
+        - lambda: "cover_update_buttons(id(win2_btn_open), id(win2_btn_close), x);"
 
   - platform: homeassistant
     id: win3_pos
@@ -71,6 +73,7 @@ sensor:
               char buf[8];
               snprintf(buf, sizeof(buf), "%d%%", (int)x);
               return std::string(buf);
+        - lambda: "cover_update_buttons(id(win3_btn_open), id(win3_btn_close), x);"
 
   - platform: homeassistant
     id: win4_pos
@@ -88,6 +91,7 @@ sensor:
               char buf[8];
               snprintf(buf, sizeof(buf), "%d%%", (int)x);
               return std::string(buf);
+        - lambda: "cover_update_buttons(id(win4_btn_open), id(win4_btn_close), x);"
 
   - platform: homeassistant
     id: win5_pos
@@ -105,6 +109,7 @@ sensor:
               char buf[8];
               snprintf(buf, sizeof(buf), "%d%%", (int)x);
               return std::string(buf);
+        - lambda: "cover_update_buttons(id(win5_btn_open), id(win5_btn_close), x);"
 
   # ── Blind positions ───────────────────────────────────────────────────────
 
@@ -124,6 +129,7 @@ sensor:
               char buf[8];
               snprintf(buf, sizeof(buf), "%d%%", (int)x);
               return std::string(buf);
+        - lambda: "cover_update_buttons(id(blind1_btn_open), id(blind1_btn_close), x);"
 
   - platform: homeassistant
     id: blind2_pos
@@ -141,6 +147,7 @@ sensor:
               char buf[8];
               snprintf(buf, sizeof(buf), "%d%%", (int)x);
               return std::string(buf);
+        - lambda: "cover_update_buttons(id(blind2_btn_open), id(blind2_btn_close), x);"
 
   - platform: homeassistant
     id: blind3_pos
@@ -158,6 +165,7 @@ sensor:
               char buf[8];
               snprintf(buf, sizeof(buf), "%d%%", (int)x);
               return std::string(buf);
+        - lambda: "cover_update_buttons(id(blind3_btn_open), id(blind3_btn_close), x);"
 
   - platform: homeassistant
     id: blind4_pos
@@ -175,6 +183,7 @@ sensor:
               char buf[8];
               snprintf(buf, sizeof(buf), "%d%%", (int)x);
               return std::string(buf);
+        - lambda: "cover_update_buttons(id(blind4_btn_open), id(blind4_btn_close), x);"
 
   - platform: homeassistant
     id: blind5_pos
@@ -192,6 +201,7 @@ sensor:
               char buf[8];
               snprintf(buf, sizeof(buf), "%d%%", (int)x);
               return std::string(buf);
+        - lambda: "cover_update_buttons(id(blind5_btn_open), id(blind5_btn_close), x);"
 
 text_sensor:
 

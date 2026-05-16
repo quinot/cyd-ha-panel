@@ -76,6 +76,8 @@ substitutions:
 esphome:
   name: ${device_name}
   friendly_name: ${friendly_name}
+  includes:
+    - packages/cover_buttons.h
   platformio_options:
     # DIO flash mode is required on ESP32-2432S032 — QIO causes boot loops
     board_build.flash_mode: dio

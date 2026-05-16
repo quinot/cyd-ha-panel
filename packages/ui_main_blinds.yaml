@@ -72,6 +72,7 @@ widgets:
             x: 240
             y: 0
             bg_color: col_btn_open
+            pad_all: 0
             on_click:
               - homeassistant.action:
                   action: cover.open_cover
@@ -91,6 +92,7 @@ widgets:
             x: 267
             y: 0
             bg_color: col_btn_stop
+            pad_all: 0
             on_click:
               - homeassistant.action:
                   action: cover.stop_cover
@@ -110,6 +112,7 @@ widgets:
             x: 294
             y: 0
             bg_color: col_btn_close
+            pad_all: 0
             on_click:
               - homeassistant.action:
                   action: cover.close_cover
@@ -183,6 +186,7 @@ widgets:
             x: 240
             y: 0
             bg_color: col_btn_open
+            pad_all: 0
             on_click:
               - homeassistant.action:
                   action: cover.open_cover
@@ -202,6 +206,7 @@ widgets:
             x: 267
             y: 0
             bg_color: col_btn_stop
+            pad_all: 0
             on_click:
               - homeassistant.action:
                   action: cover.stop_cover
@@ -221,6 +226,7 @@ widgets:
             x: 294
             y: 0
             bg_color: col_btn_close
+            pad_all: 0
             on_click:
               - homeassistant.action:
                   action: cover.close_cover
@@ -294,6 +300,7 @@ widgets:
             x: 240
             y: 0
             bg_color: col_btn_open
+            pad_all: 0
             on_click:
               - homeassistant.action:
                   action: cover.open_cover
@@ -313,6 +320,7 @@ widgets:
             x: 267
             y: 0
             bg_color: col_btn_stop
+            pad_all: 0
             on_click:
               - homeassistant.action:
                   action: cover.stop_cover
@@ -332,6 +340,7 @@ widgets:
             x: 294
             y: 0
             bg_color: col_btn_close
+            pad_all: 0
             on_click:
               - homeassistant.action:
                   action: cover.close_cover
@@ -405,6 +414,7 @@ widgets:
             x: 240
             y: 0
             bg_color: col_btn_open
+            pad_all: 0
             on_click:
               - homeassistant.action:
                   action: cover.open_cover
@@ -424,6 +434,7 @@ widgets:
             x: 267
             y: 0
             bg_color: col_btn_stop
+            pad_all: 0
             on_click:
               - homeassistant.action:
                   action: cover.stop_cover
@@ -443,6 +454,7 @@ widgets:
             x: 294
             y: 0
             bg_color: col_btn_close
+            pad_all: 0
             on_click:
               - homeassistant.action:
                   action: cover.close_cover
@@ -516,6 +528,7 @@ widgets:
             x: 240
             y: 0
             bg_color: col_btn_open
+            pad_all: 0
             on_click:
               - homeassistant.action:
                   action: cover.open_cover
@@ -535,6 +548,7 @@ widgets:
             x: 267
             y: 0
             bg_color: col_btn_stop
+            pad_all: 0
             on_click:
               - homeassistant.action:
                   action: cover.stop_cover
@@ -554,6 +568,7 @@ widgets:
             x: 294
             y: 0
             bg_color: col_btn_close
+            pad_all: 0
             on_click:
               - homeassistant.action:
                   action: cover.close_cover
