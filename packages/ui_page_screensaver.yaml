@@ -1,0 +1,37 @@
+# =============================================================================
+# Screensaver page — black background, drifting clock container
+#
+# The container drifts 1 px/s in a bouncing-ball pattern; bounds are computed
+# at runtime from lv_obj_get_width/height so they match the actual font size.
+# Logic (interval, globals) lives in packages/screensaver.yaml.
+# =============================================================================
+id: page_screensaver
+bg_color: col_black
+widgets:
+  - obj:
+      id: ss_container
+      x: 50
+      y: 82
+      width: SIZE_CONTENT
+      height: SIZE_CONTENT
+      bg_color: col_black
+      bg_opa: COVER
+      border_width: 0
+      pad_all: 0
+      layout:
+        type: FLEX
+        flex_flow: COLUMN
+        flex_align_main: START
+        flex_align_cross: CENTER
+        pad_row: 4
+      widgets:
+        - label:
+            id: ss_time
+            text: "--:--:--"
+            text_font: font_clock
+            text_color: col_ss_time
+        - label:
+            id: ss_date
+            text: "--- -- --- ----"
+            text_font: font_clock_date
+            text_color: col_ss_date
