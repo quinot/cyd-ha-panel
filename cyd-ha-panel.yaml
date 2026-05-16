@@ -29,6 +29,10 @@ substitutions:
   device_name: cyd-ha-panel
   friendly_name: "CYD HA Panel"
 
+  # ── Screensaver ────────────────────────────────────────────────────────────
+  screensaver_timeout: "5"      # seconds of idle before screensaver activates
+  screensaver_brightness: "0.5" # backlight level while screensaver is on (0.0–1.0)
+
   # ── Roof windows (5 × cover entity) ───────────────────────────────────────
   # Replace entity IDs with your actual cover entities from HA.
   # Names are truncated to ~10 chars on screen (font_small, 78px wide).
@@ -124,9 +128,10 @@ captive_portal:
 # Packages — hardware, HA entity imports, LVGL UI
 # ---------------------------------------------------------------------------
 packages:
-  hardware: !include packages/hardware.yaml
-  entities: !include packages/entities.yaml
-  ui:       !include packages/ui.yaml
+  hardware:    !include packages/hardware.yaml
+  entities:    !include packages/entities.yaml
+  ui:          !include packages/ui.yaml
+  screensaver: !include packages/screensaver.yaml
   # Uncomment the line below to test the UI without Home Assistant.
   # Remove it (or comment out) before deploying for real.
   # mock: !include packages/mock_data.yaml

@@ -1,0 +1,110 @@
+# =============================================================================
+# Screensaver package — burn-in prevention with moving clock
+#
+# LVGL's on_idle trigger (in ui.yaml) activates the screensaver after
+# ${screensaver_timeout} seconds of no touch input.
+# Shows HH:MM:SS and date (French) on a black screen; the container drifts
+# 1 px per second in a bouncing-ball pattern to cycle pixels.
+# Backlight dims to ${screensaver_brightness} (0.0–1.0) while active.
+# A touch/release event restores full backlight and returns to whichever
+# tab was active before idle.
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# HA time source
+# ---------------------------------------------------------------------------
+time:
+  - platform: homeassistant
+    id: ha_time
+
+# ---------------------------------------------------------------------------
+# State preserved across screensaver activation
+# ---------------------------------------------------------------------------
+globals:
+  # True while the screensaver page is being displayed
+  - id: screensaver_active
+    type: bool
+    restore_value: no
+    initial_value: 'false'
+
+  # Which tab was showing when idle kicked in (0=Windows, 1=Blinds, 2=Scenes)
+  - id: saved_tab
+    type: int
+    restore_value: no
+    initial_value: '0'
+
+  # millis() when screensaver last activated — used to debounce the wake touch
+  - id: screensaver_activated_at
+    type: uint32_t
+    restore_value: no
+    initial_value: '0'
+
+  # Current container position (top-left corner of ss_container)
+  # Bounds: x ∈ [0, 100],  y ∈ [0, 164]  (screen 320×240, container 220×76)
+  - id: ss_x
+    type: int
+    restore_value: no
+    initial_value: '50'
+  - id: ss_y
+    type: int
+    restore_value: no
+    initial_value: '82'
+
+  # Velocity: +1 or −1 per axis (bounces off edges)
+  - id: ss_dx
+    type: int
+    restore_value: no
+    initial_value: '1'
+  - id: ss_dy
+    type: int
+    restore_value: no
+    initial_value: '1'
+
+# ---------------------------------------------------------------------------
+# 1-second interval: update clock text + drift container
+# ---------------------------------------------------------------------------
+interval:
+  - interval: 1s
+    then:
+      - lambda: |-
+          auto t = id(ha_time).now();
+          if (t.is_valid()) {
+            // ── Time label ────────────────────────────────────────────────
+            lv_label_set_text(id(ss_time), t.strftime("%H:%M:%S").c_str());
+
+            // ── Date label — French, with year ────────────────────────────
+            // No 'static': avoids ESP32 static-init issues.
+            // Explicit bounds check: is_valid() only checks year >= 2018,
+            // month/day can still be 0 during initial HA sync → crash.
+            // ESPHome day_of_week is 1–7 (1=Sunday … 7=Saturday)
+            // month is 1–12
+            if (t.month >= 1 && t.month <= 12 && t.day_of_week >= 1 && t.day_of_week <= 7) {
+              const char* days[]   = {"Dim", "Lun", "Mar", "Mer", "Jeu", "Ven", "Sam"};
+              const char* months[] = {"jan.", "fev.", "mar.", "avr.", "mai", "juin",
+                                      "juil.", "aout", "sept.", "oct.", "nov.", "dec."};
+              char dbuf[32];
+              snprintf(dbuf, sizeof(dbuf), "%s %d %s %d",
+                       days[t.day_of_week - 1],
+                       t.day_of_month,
+                       months[t.month - 1],
+                       t.year);
+              lv_label_set_text(id(ss_date), dbuf);
+            }
+          }
+
+          // ── Move container only while screensaver is active ──────────────
+          if (!id(screensaver_active)) return;
+
+          id(ss_x) += id(ss_dx);
+          id(ss_y) += id(ss_dy);
+
+          if (id(ss_x) <= 0)   { id(ss_x) = 0;   id(ss_dx) =  1; }
+          if (id(ss_x) >= 100) { id(ss_x) = 100;  id(ss_dx) = -1; }
+          if (id(ss_y) <= 0)   { id(ss_y) = 0;    id(ss_dy) =  1; }
+          if (id(ss_y) >= 164) { id(ss_y) = 164;  id(ss_dy) = -1; }
+
+          lv_obj_set_pos(id(ss_container), id(ss_x), id(ss_y));
+
+# NOTE: the on_release wake-up handler is in packages/hardware.yaml,
+# added directly to the gt911 touchscreen entry to avoid a duplicate
+# platform registration.
