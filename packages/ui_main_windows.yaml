@@ -5,7 +5,7 @@
 #   x=100 position bar (100×10)   x=204 percentage label (width 34)
 #   x=240 Open (24×28)            x=267 Stop (24×28)   x=294 Close (24×28)
 # =============================================================================
-name: "Windows"
+name: "Fenêtres"
 id: tab_windows
 bg_color: col_bg
 border_width: 0

@@ -3,7 +3,7 @@
 # Columns: x=8, x=164  (148px wide, 8px gap, 8px margins)
 # Rows:    y=15, y=110  (85px tall, 10px gap, 15px top margin)
 # =============================================================================
-name: "Scenes"
+name: "Scènes"
 id: tab_scenes
 bg_color: col_bg
 border_width: 0

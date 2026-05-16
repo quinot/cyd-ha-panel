@@ -17,6 +17,6 @@ widgets:
       position: BOTTOM
       size: 30
       tabs:
+        - !include ui_main_scenes.yaml
         - !include ui_main_windows.yaml
         - !include ui_main_blinds.yaml
-        - !include ui_main_scenes.yaml

@@ -27,7 +27,7 @@ globals:
     restore_value: no
     initial_value: 'false'
 
-  # Which tab was showing when idle kicked in (0=Windows, 1=Blinds, 2=Scenes)
+  # Which tab was showing when idle kicked in (0=Scènes, 1=Fenêtres, 2=Stores)
   - id: saved_tab
     type: int
     restore_value: no

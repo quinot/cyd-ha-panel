@@ -1,7 +1,7 @@
 # =============================================================================
 # Blinds tab — 5 cover rows (identical structure to Windows tab)
 # =============================================================================
-name: "Blinds"
+name: "Stores"
 id: tab_blinds
 bg_color: col_bg
 border_width: 0
