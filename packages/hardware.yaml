@@ -144,13 +144,38 @@ sensor:
     attenuation: 0db       # 0–0.95 V range; max dark-state voltage ≈ 0.62 V
     update_interval: 10s
     on_raw_value:
-      # Update the screensaver label with every raw reading (no filter delay)
       - lambda: |-
           char buf[16];
           snprintf(buf, sizeof(buf), "LDR: %.2fV", x);
-          lv_label_set_text(id(lv_ldr_debug), buf);
+          lv_label_set_text(id(info_ldr), buf);
     filters:
       # Rolling median over 6 samples (60 s) — reported to HA every 10 s
       - median:
           window_size: 6
           send_every: 1
+
+  - platform: wifi_signal
+    id: wifi_rssi
+    name: "CYD WiFi Signal"
+    update_interval: 30s
+    on_value:
+      - lambda: |-
+          int rssi = (int)x;
+          const char* bars = rssi > -50 ? "▂▄▆█" :
+                             rssi > -65 ? "▂▄▆"  :
+                             rssi > -75 ? "▂▄"   :
+                             rssi > -85 ? "▂"    : "";
+          char buf[48];
+          snprintf(buf, sizeof(buf), "Signal: %d dBm %s", rssi, bars);
+          lv_label_set_text(id(info_signal), buf);
+
+text_sensor:
+  - platform: wifi_info
+    ssid:
+      id: wifi_ssid
+      name: "CYD WiFi SSID"
+      on_value:
+        - lambda: |-
+            char buf[64];
+            snprintf(buf, sizeof(buf), "WiFi: %s", x.c_str());
+            lv_label_set_text(id(info_ssid), buf);

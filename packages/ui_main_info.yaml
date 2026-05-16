@@ -1,0 +1,55 @@
+# =============================================================================
+# Info tab — date/time, LDR reading, WiFi SSID and signal strength
+#
+# Time/date updated every 1 s from screensaver.yaml interval.
+# LDR updated every 10 s from hardware.yaml on_raw_value.
+# WiFi SSID/signal updated on change / every 30 s from hardware.yaml.
+# =============================================================================
+name: "Info"
+id: tab_info
+bg_color: col_bg
+border_width: 0
+pad_all: 0
+scrollbar_mode: "off"
+
+widgets:
+  - obj:
+      id: info_container
+      width: 300
+      height: SIZE_CONTENT
+      align: CENTER
+      bg_color: col_bg
+      border_width: 0
+      pad_all: 0
+      layout:
+        type: FLEX
+        flex_flow: COLUMN
+        flex_align_main: START
+        flex_align_cross: CENTER
+        pad_row: 6
+      widgets:
+        - label:
+            id: info_time
+            text: "--:--:--"
+            text_font: font_clock
+            text_color: col_ss_time
+        - label:
+            id: info_date
+            text: "--- -- --- ----"
+            text_font: font_clock_date
+            text_color: col_ss_date
+        - label:
+            id: info_ldr
+            text: "LDR: -.--V"
+            text_font: font_medium
+            text_color: col_text_dim
+        - label:
+            id: info_ssid
+            text: "WiFi: ..."
+            text_font: font_medium
+            text_color: col_text_dim
+        - label:
+            id: info_signal
+            text: "Signal: ... dBm"
+            text_font: font_medium
+            text_color: col_text_dim

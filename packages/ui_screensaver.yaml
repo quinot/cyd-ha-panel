@@ -36,12 +36,3 @@ widgets:
             text_font: font_clock_date
             text_color: col_ss_date
 
-  # Debug: LDR voltage — fixed at bottom-left, updated every 10 s by sensor on_value
-  - label:
-      id: lv_ldr_debug
-      text: "LDR: -.--V"
-      text_font: font_small
-      text_color: col_ss_date
-      align: BOTTOM_LEFT
-      x: 4
-      y: -4

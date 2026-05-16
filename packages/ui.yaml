@@ -41,7 +41,7 @@ color:
   - id: col_ss_time
     hex: "e0e0e0"          # Near-white — screensaver clock digits
   - id: col_ss_date
-    hex: "888888"          # Mid-grey — screensaver date line
+    hex: "c0c0c0"          # Mid-grey — screensaver date line
 
 # ---------------------------------------------------------------------------
 # Fonts
@@ -62,6 +62,8 @@ font:
     extras:
       - file: "gfonts://Roboto"
         glyphs: "àâäéèêëîïôùûüÿçæœÀÂÄÉÈÊËÎÏÔÙÛÜŸÇÆŒ"
+      - file: "gfonts://Noto+Sans+Symbols+2"
+        glyphs: "▂▄▆█"   # signal strength bars
 
   - file: "gfonts://Roboto@700"
     id: font_scene

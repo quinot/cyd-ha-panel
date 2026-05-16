@@ -27,7 +27,7 @@ globals:
     restore_value: no
     initial_value: 'false'
 
-  # Which tab was showing when idle kicked in (0=Scènes, 1=Fenêtres, 2=Stores)
+  # Which tab was showing when idle kicked in (0=Scènes, 1=Fenêtres, 2=Stores, 3=Info)
   - id: saved_tab
     type: int
     restore_value: no
@@ -63,10 +63,12 @@ interval:
       - lambda: |-
           auto t = id(ha_time).now();
           if (t.is_valid()) {
-            // ── Time label ────────────────────────────────────────────────
-            lv_label_set_text(id(ss_time), t.strftime("%H:%M:%S").c_str());
+            // ── Time labels (screensaver + info tab) ──────────────────────
+            const char* time_str = t.strftime("%H:%M:%S").c_str();
+            lv_label_set_text(id(ss_time),   time_str);
+            lv_label_set_text(id(info_time), time_str);
 
-            // ── Date label — French, with year ────────────────────────────
+            // ── Date labels — French, with year ───────────────────────────
             // No 'static': avoids ESP32 static-init issues.
             // Explicit bounds check: is_valid() only checks year >= 2018,
             // month/day can still be 0 during initial HA sync → crash.
@@ -82,7 +84,8 @@ interval:
                        t.day_of_month,
                        months[t.month - 1],
                        t.year);
-              lv_label_set_text(id(ss_date), dbuf);
+              lv_label_set_text(id(ss_date),   dbuf);
+              lv_label_set_text(id(info_date), dbuf);
             }
           }
 
