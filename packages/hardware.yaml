@@ -132,18 +132,25 @@ display:
 # ---------------------------------------------------------------------------
 # Ambient light sensor — GT36516 photoresistor on GPIO34 (ADC1_CH6, input-only)
 # Circuit: 3.3V → R15 (1MΩ) → IO34 → (R19 1MΩ ∥ GT36516) → GND
-# Bright → low photoresistor resistance → parallel ≈ 0 Ω → V_IO34 ≈ 0 V
-# Dark   → high photoresistor resistance → parallel ≈ 1 MΩ → V_IO34 ≈ 1.65 V
-# 6 dB attenuation (0–1.75 V range) covers the full output with better resolution
-# than 11 dB.
+# GT36516 datasheet: 5–10 kΩ @ 10 lux, 0.3 MΩ in darkness.
+# Bright (10 lux): 1M∥5–10k ≈ 5–10 kΩ  → V_IO34 ≈ 16–32 mV
+# Dark  (0.3 MΩ):  1M∥300k  ≈ 231 kΩ   → V_IO34 ≈ 0.62 V
+# Full range fits within 0 dB (0–0.95 V); gives better resolution than 6 dB.
 # ---------------------------------------------------------------------------
 sensor:
   - platform: adc
     pin: GPIO34
     name: "CYD Ambient Light"
-    attenuation: 6db       # 0–1.75 V range; max dark-state voltage ≈ 1.65 V
+    attenuation: 0db       # 0–0.95 V range; max dark-state voltage ≈ 0.62 V
     update_interval: 10s
+    on_raw_value:
+      # Update the screensaver label with every raw reading (no filter delay)
+      - lambda: |-
+          char buf[16];
+          snprintf(buf, sizeof(buf), "LDR: %.2fV", x);
+          lv_label_set_text(id(lv_ldr_debug), buf);
     filters:
+      # Rolling median over 6 samples (60 s) — reported to HA every 10 s
       - median:
-          window_size: 5
-          send_every: 5
+          window_size: 6
+          send_every: 1
