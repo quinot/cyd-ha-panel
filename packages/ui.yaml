@@ -1472,7 +1472,6 @@ lvgl:
         - lambda: |-
             id(saved_tab) = lv_tabview_get_tab_act(id(main_tabview));
             id(screensaver_active) = true;
-            id(screensaver_activated_at) = millis();
         - light.turn_on:
             id: backlight
             brightness: ${screensaver_brightness}

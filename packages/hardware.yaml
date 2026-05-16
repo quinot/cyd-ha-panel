@@ -93,9 +93,7 @@ touchscreen:
       then:
         - if:
             condition:
-              lambda: |-
-                return id(screensaver_active)
-                    && (millis() - id(screensaver_activated_at)) > 2000;
+              lambda: "return id(screensaver_active);"
             then:
               - lambda: |-
                   id(screensaver_active) = false;

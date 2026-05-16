@@ -33,12 +33,6 @@ globals:
     restore_value: no
     initial_value: '0'
 
-  # millis() when screensaver last activated — used to debounce the wake touch
-  - id: screensaver_activated_at
-    type: uint32_t
-    restore_value: no
-    initial_value: '0'
-
   # Current container position (top-left corner of ss_container)
   # Bounds: x ∈ [0, 320−w],  y ∈ [0, 240−h]  (computed at runtime from rendered size)
   - id: ss_x
