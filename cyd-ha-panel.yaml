@@ -30,7 +30,7 @@ substitutions:
   friendly_name: "CYD HA Panel"
 
   # ── Screensaver ────────────────────────────────────────────────────────────
-  screensaver_timeout: "5"      # seconds of idle before screensaver activates
+  screensaver_timeout: "60"      # seconds of idle before screensaver activates
   screensaver_brightness: "0.3" # backlight level while screensaver is on (0.0–1.0)
 
   # ── Roof windows (5 × cover entity) ───────────────────────────────────────

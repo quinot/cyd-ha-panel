@@ -34,7 +34,7 @@ with R15 (1 MΩ) as the pull-up to 3.3 V:
 
 ```
 3.3V ── R15 (1MΩ) ── IO34 ──┬── R19 (1MΩ) ── GND
-                             └── GT36516      ── GND
+                            └── GT36516   ── GND
 ```
 
 Voltage range:
@@ -101,7 +101,7 @@ routine reconfiguration.
 |-----|---------|-------------|
 | `device_name` | `cyd-ha-panel` | ESPHome device hostname |
 | `friendly_name` | `"CYD HA Panel"` | Display name in HA |
-| `screensaver_timeout` | `"5"` | Seconds of idle before screensaver activates |
+| `screensaver_timeout` | `"60"` | Seconds of idle before screensaver activates |
 | `screensaver_brightness` | `"0.3"` | Backlight level during screensaver (0.0–1.0) |
 | `win1_id` … `win5_id` | — | HA `cover.*` entity IDs for the 5 roof windows |
 | `win1_name` … `win5_name` | — | Row labels (≤ ~10 chars; `font_small`, 78 px wide) |
@@ -215,15 +215,6 @@ glyphs give consistent bar widths regardless of how many bars are shown.
 | `font_icons` | DejaVuSans | 16 px | ▲■▼ cover control buttons |
 | `font_clock` | Roboto | 48 px | Screensaver / Info tab HH:MM:SS |
 | `font_clock_date` | Roboto | 16 px | Screensaver / Info tab date line |
-
-> **Tab label accents** (`Scènes`, `Fenêtres`): tabview tab buttons do not
-> inherit the theme `label.text_font`. Fix: add `text_font: font_medium`
-> directly on the `tabview:` widget in `ui_main.yaml`.
-
-> **Info tab label centering**: LVGL labels default to `SIZE_CONTENT` width, so
-> `flex_align_cross: CENTER` centers the widget geometrically but the text
-> inside it remains left-aligned. Fix: `width: 100%` + `text_align: CENTER`
-> on each label.
 
 ---
 
