@@ -85,8 +85,9 @@ cyd-ha-panel/
     ├── ui_screensaver.yaml    # Screensaver page (bouncing clock)
     ├── mock_data.yaml         # Fake sensor data for UI testing without HA
     └── fonts/
-        ├── DejaVuSans.ttf     # Button icons ▲■▼ (Geometric Shapes U+25A0–25FF)
-        └── DejaVuSansMono.ttf # Signal bars ▂▄▆█ (Block Elements U+2580–259F)
+        ├── DejaVuSans.ttf                  # Button icons ▲■▼ (Geometric Shapes U+25A0–25FF)
+        ├── DejaVuSansMono.ttf              # Signal bars ▂▄▆█ (Block Elements U+2580–259F)
+        └── materialdesignicons-webfont.ttf # Scene button MDI icons (Private Use Area)
 ```
 
 ---
@@ -108,7 +109,8 @@ routine reconfiguration.
 | `blind1_id` … `blind5_id` | — | HA `cover.*` entity IDs for the 5 blinds |
 | `blind1_name` … `blind5_name` | — | Row labels |
 | `scene1_id` … `scene4_id` | — | HA `scene.*` entity IDs |
-| `scene1_name` … `scene4_name` | — | Button labels (wrap at ≈ 12 chars in 98×80 px) |
+| `scene1_name` … `scene4_name` | — | Button labels (wrap at ≈ 12 chars in 148×85 px) |
+| `scene1_icon` … `scene4_icon` | — | MDI glyph character (e.g. `"\U000F0599"`); set to `"none"` or `""` to show no icon |
 
 ---
 
@@ -189,13 +191,23 @@ ranges are consistently missing. Confirmed failures:
 
 ### Font files
 
-Downloaded from the official DejaVu release:
-
+**DejaVu** — downloaded from the official release zip:
 ```
 https://github.com/dejavu-fonts/dejavu-fonts/releases/download/version_2_37/dejavu-fonts-ttf-2.37.zip
 ```
-
 Extract `ttf/DejaVuSans.ttf` and `ttf/DejaVuSansMono.ttf` into `packages/fonts/`.
+
+**Material Design Icons** — downloaded from jsDelivr (npm `@mdi/font`):
+```
+https://cdn.jsdelivr.net/npm/@mdi/font@7.4.47/fonts/materialdesignicons-webfont.ttf
+```
+Save as `packages/fonts/materialdesignicons-webfont.ttf`. Codepoints used:
+
+| Icon | MDI name | Codepoint |
+|------|----------|-----------|
+| ☀ | `weather-sunny` | `\U000F0599` |
+| 💨 | `weather-windy` | `\U000F059D` |
+| 🎬 | `projector-screen` | `\U000F042F` |
 
 | File | Used in | Glyphs |
 |------|---------|--------|
@@ -212,6 +224,7 @@ glyphs give consistent bar widths regardless of how many bars are shown.
 | `font_small` | Roboto | 11 px | Cover row name labels |
 | `font_medium` | Roboto + DejaVuSansMono extras | 14 px | General labels, tab bar, signal bars |
 | `font_scene` | Roboto Bold | 13 px | Scene button labels |
+| `font_mdi` | MaterialDesignIcons webfont | 28 px | Scene button icons (sun, wind, screen) |
 | `font_icons` | DejaVuSans | 16 px | ▲■▼ cover control buttons |
 | `font_clock` | Roboto | 48 px | Screensaver / Info tab HH:MM:SS |
 | `font_clock_date` | Roboto | 16 px | Screensaver / Info tab date line |

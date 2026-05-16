@@ -73,6 +73,15 @@ font:
       - file: "gfonts://Roboto@700"
         glyphs: "àâäéèêëîïôùûüÿçæœÀÂÄÉÈÊËÎÏÔÙÛÜŸÇÆŒ"
 
+  - file: "packages/fonts/materialdesignicons-webfont.ttf"
+    id: font_mdi
+    size: 28
+    bpp: 4
+    glyphs:
+      - "\U000F0599"   # weather-sunny        — Aziz, light!
+      - "\U000F059D"   # weather-windy        — Aération
+      - "\U000F042F"   # projector-screen     — Home cinema
+
   - file: "packages/fonts/DejaVuSans.ttf"
     id: font_icons
     size: 16
@@ -106,6 +115,10 @@ lvgl:
     - lambda: |-
         lv_obj_add_flag(lv_tabview_get_content(id(main_tabview)),
                         LV_OBJ_FLAG_SCROLL_MOMENTUM);
+        scene_button_init(id(scene1_btn), id(font_mdi)->get_lv_font(), "${scene1_icon}", id(font_scene)->get_lv_font(), "${scene1_name}");
+        scene_button_init(id(scene2_btn), id(font_mdi)->get_lv_font(), "${scene2_icon}", id(font_scene)->get_lv_font(), "${scene2_name}");
+        scene_button_init(id(scene3_btn), id(font_mdi)->get_lv_font(), "${scene3_icon}", id(font_scene)->get_lv_font(), "${scene3_name}");
+        scene_button_init(id(scene4_btn), id(font_mdi)->get_lv_font(), "${scene4_icon}", id(font_scene)->get_lv_font(), "${scene4_name}");
 
   theme:
     obj:

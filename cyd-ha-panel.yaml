@@ -63,12 +63,16 @@ substitutions:
   # Labels wrap inside 98×80px buttons; keep them short (≤ 12 chars).
   scene1_id:   scene.aziz_light
   scene1_name: "Aziz, light!"
+  scene1_icon: "\U000F0599"   # mdi:weather-sunny
   scene2_id:   scene.home_cinema
   scene2_name: "Home cinema"
+  scene2_icon: "\U000F042F"   # mdi:projector-screen
   scene3_id:   scene.aeration
   scene3_name: "Aération"
+  scene3_icon: "\U000F059D"   # mdi:weather-windy
   scene4_id:   scene.fermier_les_fenetres
   scene4_name: "Fermer les fenêtres"
+  scene4_icon: "none"          # no icon — scene_button_init skips the icon label entirely
 
 # =============================================================================
 # Core ESPHome config
@@ -78,6 +82,7 @@ esphome:
   friendly_name: ${friendly_name}
   includes:
     - packages/cover_buttons.h
+    - packages/scene_buttons.h
   platformio_options:
     # DIO flash mode is required on ESP32-2432S032 — QIO causes boot loops
     board_build.flash_mode: dio
