@@ -1,5 +1,5 @@
 # =============================================================================
-# Screensaver package — burn-in prevention with moving clock
+# Screensaver package — burn-in prevention with moving clock + pixel snow
 #
 # LVGL's on_idle trigger (in ui.yaml) activates the screensaver after
 # ${screensaver_timeout} seconds of no touch input.
@@ -8,6 +8,13 @@
 # Backlight dims to ${screensaver_brightness} (0.0–1.0) while active.
 # A touch/release event restores full backlight and returns to whichever
 # tab was active before idle.
+#
+# Anti-burn-in (pixel snow):
+# After ${antiburn_delay} seconds of screensaver AND during a designated night
+# slot (hours 2–5, minutes :05–:34), the anti-burn switch activates:
+#   - backlight turns off (snow invisible to users)
+#   - LVGL is paused with show_snow: true (random pixels exercise all subpixels)
+# It deactivates automatically when the night slot ends, or immediately on touch.
 # =============================================================================
 
 # ---------------------------------------------------------------------------
@@ -54,8 +61,15 @@ globals:
     restore_value: no
     initial_value: '1'
 
+  # Seconds the screensaver has been continuously active.
+  # Increments every second while screensaver_active; resets to 0 on wake.
+  - id: ss_elapsed
+    type: int
+    restore_value: no
+    initial_value: '0'
+
 # ---------------------------------------------------------------------------
-# 1-second interval: update clock text + drift container
+# 1-second interval: update clock text + drift container + manage anti-burn
 # ---------------------------------------------------------------------------
 interval:
   - interval: 1s
@@ -89,6 +103,31 @@ interval:
             }
           }
 
+          // ── Screensaver elapsed counter + anti-burn management ────────────
+          if (id(screensaver_active)) {
+            id(ss_elapsed) += 1;
+
+            // Anti-burn conditions:
+            //   1. Screensaver has been running long enough to show the clock
+            //   2. Current time is in a designated night slot (hours 2–5, :05–:34)
+            bool delay_met = (id(ss_elapsed) >= ${antiburn_delay});
+            bool in_slot   = false;
+            if (t.is_valid()) {
+              in_slot = (t.hour >= 2 && t.hour <= 5) &&
+                        (t.minute >= 5 && t.minute < 35);
+            }
+            bool should_burn = delay_met && in_slot;
+            if (should_burn && !id(switch_antiburn).state)
+              id(switch_antiburn).turn_on();
+            if (!should_burn && id(switch_antiburn).state)
+              id(switch_antiburn).turn_off();
+          } else {
+            // Screensaver not active: reset counter and ensure anti-burn is off
+            id(ss_elapsed) = 0;
+            if (id(switch_antiburn).state)
+              id(switch_antiburn).turn_off();
+          }
+
           // ── Move container only while screensaver is active ──────────────
           if (!id(screensaver_active)) return;
 
@@ -104,6 +143,50 @@ interval:
           if (id(ss_y) >= y_max)  { id(ss_y) = y_max;  id(ss_dy) = -1; }
 
           lv_obj_set_pos(id(ss_container), id(ss_x), id(ss_y));
+
+# ---------------------------------------------------------------------------
+# Anti-burn-in switch
+#
+# Managed exclusively by the 1-second interval above — never called directly.
+# turn_on : kills backlight, pauses LVGL with show_snow (random pixels).
+# turn_off: resumes LVGL, requests a full redraw, restores backlight:
+#             screensaver still active → dim (${screensaver_brightness})
+#             screensaver also ended  → full brightness
+#
+# The snow itself is invisible to the user because the backlight is off.
+# It exercises all display pixels to prevent static image retention.
+# A touch while the snow is running calls switch.turn_off via the gt911
+# on_release handler in hardware.yaml (lvgl.is_paused guard), which then
+# falls through to the normal screensaver-wake path.
+# ---------------------------------------------------------------------------
+switch:
+  - platform: template
+    id: switch_antiburn
+    name: "CYD Anti-burn-in"
+    optimistic: true
+    restore_mode: ALWAYS_OFF
+    turn_on_action:
+      - light.turn_off:
+          id: backlight
+          transition_length: 1s
+      - lvgl.pause:
+          show_snow: true
+    turn_off_action:
+      - lvgl.resume:
+      - lvgl.widget.redraw:
+      - if:
+          condition:
+            lambda: "return id(screensaver_active);"
+          then:
+            - light.turn_on:
+                id: backlight
+                brightness: ${screensaver_brightness}
+                transition_length: 1s
+          else:
+            - light.turn_on:
+                id: backlight
+                brightness: 1.0
+                transition_length: 300ms
 
 # NOTE: the on_release wake-up handler is in packages/hardware.yaml,
 # added directly to the gt911 touchscreen entry to avoid a duplicate

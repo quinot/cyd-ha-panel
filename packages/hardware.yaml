@@ -93,6 +93,14 @@ touchscreen:
       swap_xy: true
     on_release:
       then:
+        # If the nightly anti-burn-in snow is running, cancel it first.
+        # switch_antiburn.turn_off_action resumes LVGL and restores backlight.
+        - if:
+            condition:
+              lvgl.is_paused:
+            then:
+              - switch.turn_off: switch_antiburn
+        # Then handle the normal screensaver-wake logic.
         - if:
             condition:
               lambda: "return id(screensaver_active);"

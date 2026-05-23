@@ -104,6 +104,7 @@ routine reconfiguration.
 | `friendly_name` | `"CYD HA Panel"` | Display name in HA |
 | `screensaver_timeout` | `"60"` | Seconds of idle before screensaver activates |
 | `screensaver_brightness` | `"0.3"` | Backlight level during screensaver (0.0–1.0) |
+| `antiburn_delay` | `"60"` | Seconds of screensaver before pixel-snow can start (gives time to read the clock) |
 | `win1_id` … `win5_id` | — | HA `cover.*` entity IDs for the 5 roof windows |
 | `win1_name` … `win5_name` | — | Row labels (≤ ~10 chars; `font_small`, 78 px wide) |
 | `blind1_id` … `blind5_id` | — | HA `cover.*` entity IDs for the 5 blinds |
@@ -173,6 +174,37 @@ ESPHome does not support multiple `touchscreen:` platform entries.
 
 The same 1-second interval also updates the clock labels on the **Info tab**
 (`info_time`, `info_date`) so both views stay in sync without a second timer.
+
+### Anti-burn-in (nightly pixel snow)
+
+TFT displays suffer from image retention when the same pixels are lit for
+extended periods. The screensaver bouncing clock already helps, but dedicated
+**pixel snow** exercises every subpixel uniformly.
+
+Anti-burn is a second phase of the screensaver — it can only activate while
+the screensaver is already running. The 1-second interval that drives the
+clock and the bouncing animation also evaluates two conditions every tick:
+
+1. The screensaver has been continuously active for at least `${antiburn_delay}`
+   seconds (default 60 s) — enough time for the user to see the clock.
+2. The current time falls within a designated night slot: hours 2–5,
+   minutes :05–:34.
+
+When both are true the `switch_antiburn` template switch is turned on:
+
+- **turn_on**: fades the backlight to 0 % over 1 s, then pauses LVGL with
+  `show_snow: true` (random-coloured pixels, cycling continuously).
+- **turn_off**: resumes LVGL, requests a full redraw, then restores the
+  backlight to `${screensaver_brightness}` (screensaver still active) or to
+  full brightness (if the device is also waking up).
+
+The snow is invisible to anyone in the room because the backlight is off.
+
+Anti-burn turns off automatically as soon as either condition above becomes
+false (slot ends at :35, or screensaver is dismissed). Any **touch release**
+while LVGL is paused calls `switch.turn_off: switch_antiburn` immediately
+(via the `lvgl.is_paused` guard in the GT911 `on_release` handler), then
+falls through to the normal screensaver-wake path.
 
 ---
 
