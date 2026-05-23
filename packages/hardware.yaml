@@ -175,7 +175,9 @@ text_sensor:
       id: wifi_ssid
       name: "CYD WiFi SSID"
       on_value:
-        - lambda: |-
-            char buf[64];
-            snprintf(buf, sizeof(buf), "WiFi: %s", x.c_str());
-            lv_label_set_text(id(info_ssid), buf);
+        - lambda: "update_wifi_label(id(info_ssid), id(wifi_ssid).state, id(wifi_ip).state);"
+    ip_address:
+      id: wifi_ip
+      internal: true
+      on_value:
+        - lambda: "update_wifi_label(id(info_ssid), id(wifi_ssid).state, id(wifi_ip).state);"

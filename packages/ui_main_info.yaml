@@ -53,7 +53,7 @@ widgets:
             id: info_ssid
             width: 100%
             text_align: CENTER
-            text: "WiFi: ..."
+            text: "WiFi: unconnected"
             text_font: font_medium
             text_color: col_text_dim
         - label:
