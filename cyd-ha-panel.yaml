@@ -61,7 +61,7 @@ substitutions:
   blind5_id:   cover.velux_internal_cover_blinds_5
   blind5_name: "Cuisine"
 
-  # ── Scenes (6 × scene entity, 2 rows × 3 columns) ─────────────────────────
+  # ── Scenes (button grid layout) ───────────────────────────────────────────
   # Labels wrap inside 98×80px buttons; keep them short (≤ 12 chars).
   scene1_id:   scene.aziz_light
   scene1_name: "Aziz, light!"
@@ -72,7 +72,7 @@ substitutions:
   scene3_id:   scene.aeration
   scene3_name: "Aération"
   scene3_icon: "\U000F059D"   # mdi:weather-windy
-  scene4_id:   scene.fermier_les_fenetres
+  scene4_id:   scene.fermer_les_fenetres
   scene4_name: "Fermer les fenêtres"
   scene4_icon: "none"          # no icon — scene_button_init skips the icon label entirely
 
