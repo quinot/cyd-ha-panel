@@ -301,19 +301,19 @@ a live HA connection.
 
 | Token | Hex | Use |
 |-------|-----|-----|
-| `col_bg` | `#1a1a2e` | Screen background (dark navy) |
-| `col_card` | `#16213e` | Alternating row tint |
-| `col_accent` | `#00b4d8` | Progress bar fill, scene button border |
-| `col_text` | `#ffffff` | Primary labels |
-| `col_text_dim` | `#9e9e9e` | Secondary labels (LDR, WiFi) |
-| `col_bar_bg` | `#1e4a7a` | Progress bar track |
-| `col_btn_open` | `#1b5e20` | ▲ Open button |
-| `col_btn_stop` | `#e65100` | ■ Stop button |
-| `col_btn_close` | `#7f0000` | ▼ Close button |
-| `col_scene_btn` | `#0d3b5e` | Scene card background |
-| `col_tab_active` | `#00b4d8` | Active tab indicator |
-| `col_tab_bar` | `#0a0a1a` | Tab bar background |
-| `col_black` | `#000000` | Screensaver background |
-| `col_ss_time` | `#e0e0e0` | Screensaver / Info clock digits |
-| `col_ss_date` | `#c0c0c0` | Screensaver / Info date line |
-| `col_state_closed` | `#555555` | Cover-state dot: closed/unknown |
+| `col_bg` | ![#1a1a2e](https://placehold.co/15x15/1a1a2e/1a1a2e.png) `#1a1a2e` | Screen background (dark navy) |
+| `col_card` | ![#16213e](https://placehold.co/15x15/16213e/16213e.png) `#16213e` | Alternating row tint |
+| `col_accent` | ![#00b4d8](https://placehold.co/15x15/00b4d8/00b4d8.png) `#00b4d8` | Progress bar fill, scene button border |
+| `col_text` | ![#ffffff](https://placehold.co/15x15/ffffff/ffffff.png) `#ffffff` | Primary labels |
+| `col_text_dim` | ![#9e9e9e](https://placehold.co/15x15/9e9e9e/9e9e9e.png) `#9e9e9e` | Secondary labels (LDR, WiFi) |
+| `col_bar_bg` | ![#1e4a7a](https://placehold.co/15x15/1e4a7a/1e4a7a.png) `#1e4a7a` | Progress bar track |
+| `col_btn_open` | ![#1b5e20](https://placehold.co/15x15/1b5e20/1b5e20.png) `#1b5e20` | ▲ Open button |
+| `col_btn_stop` | ![#e65100](https://placehold.co/15x15/e65100/e65100.png) `#e65100` | ■ Stop button |
+| `col_btn_close` | ![#7f0000](https://placehold.co/15x15/7f0000/7f0000.png) `#7f0000` | ▼ Close button |
+| `col_scene_btn` | ![#0d3b5e](https://placehold.co/15x15/0d3b5e/0d3b5e.png) `#0d3b5e` | Scene card background |
+| `col_tab_active` | ![#00b4d8](https://placehold.co/15x15/00b4d8/00b4d8.png) `#00b4d8` | Active tab indicator |
+| `col_tab_bar` | ![#0a0a1a](https://placehold.co/15x15/0a0a1a/0a0a1a.png) `#0a0a1a` | Tab bar background |
+| `col_black` | ![#000000](https://placehold.co/15x15/000000/000000.png) `#000000` | Screensaver background |
+| `col_ss_time` | ![#e0e0e0](https://placehold.co/15x15/e0e0e0/e0e0e0.png) `#e0e0e0` | Screensaver / Info clock digits |
+| `col_ss_date` | ![#c0c0c0](https://placehold.co/15x15/c0c0c0/c0c0c0.png) `#c0c0c0` | Screensaver / Info date line |
+| `col_state_closed` | ![#555555](https://placehold.co/15x15/555555/555555.png) `#555555` | Cover-state dot: closed/unknown |
