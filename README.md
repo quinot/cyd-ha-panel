@@ -10,7 +10,7 @@ Controls 5 roof windows, 5 associated blinds, and HA scenes via LVGL touch UI.
 
 ## Hardware
 
-Tested on the **ESP32-2432S032C** (Cheap Yellow Display v2, capacitive touch variant).
+Tested on the **ESP32-2432S032C** (Cheap Yellow Display v2, capacitive touch variant - [AliExpress](https://s.click.aliexpress.com/e/_c3fBS1d7)).
 
 | Component | Details |
 |-----------|---------|
@@ -43,6 +43,11 @@ Voltage range:
 
 Maximum voltage ≈ 0.62 V → use `attenuation: 0db` (0–0.95 V range) for best resolution.
 Note: brighter = lower voltage (LDR resistance drops, pulling IO34 toward GND).
+
+### Power supply
+
+The board can take power (5V) from the USB C connector, or from a 4-pin Molex Microblade which also provides access to the serial port.
+I'm powering it from a [switching AC power supply module](https://s.click.aliexpress.com/e/_c3ZsVazP) hidden behind it in a wall mount box, on which I soldered a [pigtail connector](https://s.click.aliexpress.com/e/_c2wNZYbb) (not a real MicroBlade, but close enough).
 
 ---
 
